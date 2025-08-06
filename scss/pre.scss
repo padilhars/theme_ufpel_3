@@ -1,0 +1,78 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * UFPel theme pre SCSS.
+ *
+ * @package    theme_ufpel
+ * @copyright  2025 Universidade Federal de Pelotas
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+// Cores institucionais UFPel.
+$ufpel-blue: #0061A5 !default;
+$ufpel-light-blue: #4A90C9 !default;
+$ufpel-dark-blue: #003D6B !default;
+$ufpel-gray: #6C757D !default;
+$ufpel-light-gray: #F8F9FA !default;
+
+// Sobrescreve variáveis do Bootstrap.
+$primary: $ufpel-blue !default;
+$secondary: $ufpel-gray !default;
+$success: #28A745 !default;
+$info: $ufpel-light-blue !default;
+$warning: #FFC107 !default;
+$danger: #DC3545 !default;
+
+// Tipografia.
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
+$headings-font-family: 'Poppins', $font-family-base !default;
+$headings-font-weight: 600 !default;
+
+// Espaçamentos.
+$spacer: 1rem !default;
+$enable-responsive-font-sizes: true !default;
+
+// Navbar.
+$navbar-light-color: $ufpel-dark-blue !default;
+$navbar-light-hover-color: $ufpel-blue !default;
+$navbar-light-active-color: $ufpel-blue !default;
+
+// Cards.
+$card-border-radius: .5rem !default;
+$card-box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !default;
+
+// Botões.
+$btn-border-radius: .375rem !default;
+$btn-font-weight: 500 !default;
+
+// Mixins personalizados.
+@mixin ufpel-transition($property: all, $duration: .3s, $timing: ease-in-out) {
+    transition: $property $duration $timing;
+}
+
+@mixin ufpel-shadow($level: 1) {
+    @if $level == 1 {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+    } @else if $level == 2 {
+        box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .1);
+    } @else if $level == 3 {
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    }
+}
+
+@mixin ufpel-gradient($start: $ufpel-blue, $end: $ufpel-dark-blue) {
+    background: linear-gradient(135deg, $start 0%, $end 100%);
+}
