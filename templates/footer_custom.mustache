@@ -104,7 +104,7 @@
                             <li>
                                 <a href="/calendar/view.php">
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    {{#str}}calendar, core_calendar{{/str}}
+                                    {{#str}}calendar{{/str}}
                                 </a>
                             </li>
                         </ul>
@@ -118,7 +118,7 @@
                             <li>
                                 <a href="{{contacturl}}">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
-                                    {{#str}}contactus{{/str}}
+                                    {{#str}}contactus, theme_ufpel{{/str}}
                                 </a>
                             </li>
                             <li>
@@ -152,19 +152,19 @@
                             <li>
                                 <a href="{{privacyurl}}">
                                     <i class="fa fa-shield" aria-hidden="true"></i>
-                                    {{#str}}privacy, core_privacy{{/str}}
+                                    {{#str}}privacyandpolicies, admin{{/str}}
                                 </a>
                             </li>
                             <li>
                                 <a href="/admin/tool/policy/index.php">
                                     <i class="fa fa-gavel" aria-hidden="true"></i>
-                                    {{#str}}policies, tool_policy{{/str}}
+                                    {{#str}}policiesagreements, tool_policy{{/str}}
                                 </a>
                             </li>
                             <li>
                                 <a href="/admin/tool/dataprivacy/summary.php">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
-                                    {{#str}}dataprivacy, tool_dataprivacy{{/str}}
+                                    {{#str}}dataprivacy, privacy{{/str}}
                                 </a>
                             </li>
                         </ul>
@@ -173,24 +173,27 @@
                 
                 <div class="col-lg-2 col-md-12">
                     <div class="footer-section">
-                        <h4 class="footer-subtitle">{{#str}}mobileapp{{/str}}</h4>
+                        <h4 class="footer-subtitle">{{#str}}mobileapp, theme_ufpel{{/str}}</h4>
                         <div class="footer-apps">
-                            <a href="https://download.moodle.org/mobile" 
-                               class="app-badge" 
-                               target="_blank" 
-                               rel="noopener">
-                                <img src="{{{output.image_url 'theme_ufpel', 'app-store'}}}" 
-                                     alt="{{#str}}downloadapp, theme_ufpel{{/str}}"
-                                     loading="lazy">
-                            </a>
-                            <a href="https://download.moodle.org/mobile" 
-                               class="app-badge" 
-                               target="_blank" 
-                               rel="noopener">
-                                <img src="{{{output.image_url 'theme_ufpel', 'google-play'}}}" 
-                                     alt="{{#str}}downloadapp, theme_ufpel{{/str}}"
-                                     loading="lazy">
-                            </a>
+                            <p class="small">
+                                {{#str}}downloadapp, theme_ufpel{{/str}}
+                            </p>
+                            <div class="app-links">
+                                <a href="https://download.moodle.org/mobile" 
+                                   class="btn btn-sm btn-outline-light mb-2" 
+                                   target="_blank" 
+                                   rel="noopener">
+                                    <i class="fab fa-apple" aria-hidden="true"></i>
+                                    iOS
+                                </a>
+                                <a href="https://download.moodle.org/mobile" 
+                                   class="btn btn-sm btn-outline-light mb-2" 
+                                   target="_blank" 
+                                   rel="noopener">
+                                    <i class="fab fa-android" aria-hidden="true"></i>
+                                    Android
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,19 +212,13 @@
                 <div class="col-md-6">
                     <div class="footer-credits text-md-end">
                         <p>
-                            {{#str}}poweredby{{/str}} 
+                            {{#str}}poweredby, theme_ufpel{{/str}} 
                             <a href="https://moodle.org" target="_blank" rel="noopener">Moodle</a>
-                            | {{#str}}theme{{/str}}: UFPel
+                            | {{#str}}theme, theme_ufpel{{/str}}: UFPel
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    {{#js}}
-    require(['theme_ufpel/footer'], function(Footer) {
-        Footer.init();
-    });
-    {{/js}}
 </footer>

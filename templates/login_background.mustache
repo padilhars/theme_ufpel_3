@@ -15,29 +15,48 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_ufpel/login_background
+    @template theme_ufpel/login_simple
 
-    Login background template for UFPel theme.
+    Simple login page template for UFPel theme.
 
     Context variables required for this template:
-    * backgroundurl - URL of the background image
-    * backgroundalt - Alt text for the background image
-
-    Example context (json):
-    {
-        "backgroundurl": "https://example.com/login-bg.jpg",
-        "backgroundalt": "Login background image"
-    }
+    * sitename - The site name
+    * output - The output renderer
 }}
-<div class="login-background-wrapper" data-region="login-background">
-    <div class="login-background-overlay" aria-hidden="true"></div>
-    <picture class="login-background-image">
-        <source media="(min-width: 1200px)" data-srcset="{{backgroundurl}}">
-        <source media="(min-width: 768px)" data-srcset="{{backgroundurl}}">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E"
-             data-src="{{backgroundurl}}"
-             alt="{{backgroundalt}}"
-             class="lazyload"
-             loading="lazy">
-    </picture>
+<!DOCTYPE html>
+<html {{{ output.htmlattributes }}}>
+<head>
+    <title>{{#str}}login{{/str}} - {{{ sitename }}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{{ output.standard_head_html }}}
+</head>
+
+<body {{{ output.body_attributes }}}>
+
+<div id="page-wrapper">
+    {{{ output.standard_top_of_body_html }}}
+
+    <div id="page" class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">{{{ sitename }}}</h2>
+                        
+                        <div id="region-main">
+                            {{{ output.course_content_header }}}
+                            {{{ output.main_content }}}
+                            {{{ output.course_content_footer }}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{{ output.standard_footer_html }}}
+    {{{ output.standard_end_of_body_html }}}
 </div>
+
+</body>
+</html>

@@ -15,82 +15,38 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_ufpel/login
+    @template theme_ufpel/login_simple
 
-    Login page template for UFPel theme.
+    Simple login page template for UFPel theme.
 
     Context variables required for this template:
     * sitename - The site name
     * output - The output renderer
-    * bodyattributes - Body tag attributes
-    * loginbackground - HTML for login background image
-    * doctype - DOCTYPE declaration
-    * htmlattributes - HTML tag attributes
-    * headhtml - Standard head HTML
-    * topofbodyhtml - Standard top of body HTML
-    * standardfooterhtml - Standard footer HTML
-    * standardendbodyhtml - Standard end of body HTML
-    * currentyear - Current year for copyright
 }}
-{{{ doctype }}}
-<html {{{ htmlattributes }}}>
+<!DOCTYPE html>
+<html {{{ output.htmlattributes }}}>
 <head>
     <title>{{#str}}login{{/str}} - {{{ sitename }}}</title>
-    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
-    {{{ headhtml }}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{{ output.standard_head_html }}}
 </head>
 
-<body {{{ bodyattributes }}}>
-{{{ loginbackground }}}
+<body {{{ output.body_attributes }}}>
 
-<div id="page-wrapper" class="d-flex flex-column h-100">
-    {{{ topofbodyhtml }}}
+<div id="page-wrapper">
+    {{{ output.standard_top_of_body_html }}}
 
-    <div id="page" class="container-fluid d-flex align-items-center justify-content-center flex-fill">
-        <div class="row justify-content-center w-100">
+    <div id="page" class="container-fluid mt-5">
+        <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="login-container card">
-                    <div class="card-body p-4">
-                        <div class="login-logo text-center mb-4">
-                            <h1 class="h2 mb-0 text-primary">{{{ sitename }}}</h1>
-                        </div>
-
-                        <div class="login-form">
-                            <div id="region-main-box">
-                                <section id="region-main" class="region-main-content" aria-label="{{#str}}content{{/str}}">
-                                    {{{ output.course_content_header }}}
-                                    {{{ output.main_content }}}
-                                    {{{ output.course_content_footer }}}
-                                </section>
-                            </div>
-                        </div>
-
-                        <div class="login-divider text-center my-3">
-                            <hr>
-                        </div>
-
-                        <div class="login-options text-center">
-                            {{#output.login_signup_url}}
-                            <p class="mb-1">
-                                {{#str}}firsttime{{/str}}
-                                <a href="{{{ output.login_signup_url }}}">{{#str}}startsignup{{/str}}</a>
-                            </p>
-                            {{/output.login_signup_url}}
-                            
-                            <p class="mb-0">
-                                <a href="{{{ config.wwwroot }}}/login/forgot_password.php">{{#str}}forgotten{{/str}}</a>
-                            </p>
-                        </div>
-
-                        <div class="login-footer text-center mt-4 text-muted small">
-                            <p class="mb-1">© {{currentyear}} Universidade Federal de Pelotas</p>
-                            <p class="mb-0">
-                                <a href="{{{ config.wwwroot }}}" class="text-muted">{{#str}}home{{/str}}</a>
-                                {{#output.page_doc_link}}
-                                    | <a href="{{{ output.page_doc_link }}}" class="text-muted">{{#str}}moodledocs{{/str}}</a>
-                                {{/output.page_doc_link}}
-                            </p>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">{{{ sitename }}}</h2>
+                        
+                        <div id="region-main">
+                            {{{ output.course_content_header }}}
+                            {{{ output.main_content }}}
+                            {{{ output.course_content_footer }}}
                         </div>
                     </div>
                 </div>
@@ -98,11 +54,9 @@
         </div>
     </div>
 
-    <footer id="page-footer" class="mt-auto">
-        {{{ standardfooterhtml }}}
-    </footer>
+    {{{ output.standard_footer_html }}}
+    {{{ output.standard_end_of_body_html }}}
 </div>
 
-{{{ standardendbodyhtml }}}
 </body>
 </html>

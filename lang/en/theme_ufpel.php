@@ -319,3 +319,17 @@ $string['memoryusage'] = 'Memory usage';
 $string['cpuusage'] = 'CPU usage';
 $string['activesessions'] = 'Active sessions';
 $string['concurrentusers'] = 'Concurrent users';
+
+// Footer strings
+$string['footerdescription'] = 'Learning management system of the Federal University of Pelotas';
+$string['quicklinks'] = 'Quick links';
+$string['support'] = 'Support';
+$string['policies'] = 'Policies';
+$string['contactus'] = 'Contact us';
+$string['help'] = 'Help';
+$string['documentation'] = 'Documentation';
+$string['mobileapp'] = 'Mobile app';
+$string['downloadapp'] = 'Download the Moodle app';
+$string['allrightsreserved'] = 'All rights reserved';
+$string['poweredby'] = 'Powered by';
+$string['theme'] = 'Theme';

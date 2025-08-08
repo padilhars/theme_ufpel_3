@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Plugin version (YYYYMMDDXX where XX is the daily increment).
-$plugin->version   = 2025120101; // Updated for hooks system migration
+$plugin->version   = 2025120102; // Fixed hooks system - removed deprecated callbacks
 $plugin->requires  = 2024100700; // Moodle 5.0 or later
 
 // Plugin component name.
@@ -35,7 +35,7 @@ $plugin->component = 'theme_ufpel';
 $plugin->maturity  = MATURITY_STABLE;
 
 // Human-readable release version.
-$plugin->release   = '1.2.0'; // Updated for hooks system
+$plugin->release   = '1.2.1'; // Fixed deprecated callbacks
 
 // Dependencies.
 $plugin->dependencies = [

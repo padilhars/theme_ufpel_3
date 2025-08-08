@@ -219,3 +219,17 @@ $string['social_youtube'] = 'URL do YouTube';
 $string['social_youtube_desc'] = 'URL do canal da instituição no YouTube';
 $string['social_instagram'] = 'URL do Instagram';
 $string['social_instagram_desc'] = 'URL da página da instituição no Instagram';
+
+// Strings do rodapé
+$string['footerdescription'] = 'Sistema de gestão de aprendizagem da Universidade Federal de Pelotas';
+$string['quicklinks'] = 'Links rápidos';
+$string['support'] = 'Suporte';
+$string['policies'] = 'Políticas';
+$string['contactus'] = 'Fale conosco';
+$string['help'] = 'Ajuda';
+$string['documentation'] = 'Documentação';
+$string['mobileapp'] = 'Aplicativo móvel';
+$string['downloadapp'] = 'Baixe o aplicativo Moodle';
+$string['allrightsreserved'] = 'Todos os direitos reservados';
+$string['poweredby'] = 'Desenvolvido com';
+$string['theme'] = 'Tema';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Login page layout for theme_ufpel.
+ * Login layout for theme_ufpel - Final working version
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -24,78 +24,75 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Get the renderer safely
-$renderer = $PAGE->get_renderer('core');
+// This is the safest approach - just use Boost's login layout
+// The UFPel customizations can be applied via CSS instead
+$boostlayout = $CFG->dirroot . '/theme/boost/layout/login.php';
 
-// Add login background if configured
-$loginbackground = '';
-try {
-    $loginbgurl = $PAGE->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
-    if (!empty($loginbgurl)) {
-        $loginbackground = $renderer->login_background();
-    }
-} catch (Exception $e) {
-    // Silently ignore errors with login background
-    $loginbackground = '';
-}
-
-// Get site name safely
-$sitename = '';
-try {
-    $sitename = format_string($SITE->shortname, true, [
-        'context' => context_course::instance(SITEID), 
-        'escape' => false
-    ]);
-} catch (Exception $e) {
-    $sitename = 'Moodle';
-}
-
-// Prepare template context with error handling
-$templatecontext = [
-    'sitename' => $sitename,
-    'output' => $OUTPUT,
-    'bodyattributes' => $OUTPUT->body_attributes(), 
-    'loginbackground' => $loginbackground,
-    'doctype' => $OUTPUT->doctype(),
-    'htmlattributes' => $OUTPUT->htmlattributes(),
-    'headhtml' => $OUTPUT->standard_head_html(),
-    'topofbodyhtml' => $OUTPUT->standard_top_of_body_html(),
-    'standardfooterhtml' => $OUTPUT->standard_footer_html(),
-    'standardendbodyhtml' => $OUTPUT->standard_end_of_body_html(),
-    'currentyear' => date('Y'),
-];
-
-// Render the template safely
-try {
-    echo $OUTPUT->render_from_template('theme_ufpel/login', $templatecontext);
-} catch (Exception $e) {
-    // Fallback to basic HTML if template fails
-    debugging('Error rendering login template: ' . $e->getMessage(), DEBUG_DEVELOPER);
+if (file_exists($boostlayout)) {
+    // Use Boost's login layout directly
+    include($boostlayout);
+} else {
+    // Emergency fallback - basic HTML output
+    $templatecontext = [
+        'sitename' => format_string($SITE->shortname, true, [
+            'context' => context_course::instance(SITEID),
+            'escape' => false
+        ]),
+        'output' => $OUTPUT,
+        'bodyattributes' => $OUTPUT->body_attributes(['class' => 'login-page']),
+    ];
     
-    // Simple fallback HTML
-    echo $OUTPUT->doctype();
+    // Output basic HTML structure
+    echo $OUTPUT->doctype() . "\n";
     echo html_writer::start_tag('html', $OUTPUT->htmlattributes());
     echo html_writer::start_tag('head');
-    echo html_writer::tag('title', get_string('login') . ' - ' . $sitename);
+    echo html_writer::tag('title', $templatecontext['sitename'] . ': ' . get_string('login'));
+    echo html_writer::tag('meta', '', [
+        'name' => 'viewport',
+        'content' => 'width=device-width, initial-scale=1.0'
+    ]);
     echo $OUTPUT->standard_head_html();
+    
+    // Add some basic inline CSS for the login page
+    echo html_writer::tag('style', '
+        body.login-page {
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem;
+        }
+        .login-container h2 {
+            color: #003366;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+    ');
+    
     echo html_writer::end_tag('head');
-    echo html_writer::start_tag('body', $OUTPUT->body_attributes());
+    echo html_writer::start_tag('body', $templatecontext['bodyattributes']);
     echo $OUTPUT->standard_top_of_body_html();
     
-    echo $loginbackground;
+    // Main login container
+    echo html_writer::start_div('login-container');
+    echo html_writer::tag('h2', $templatecontext['sitename']);
     
-    echo html_writer::start_div('container-fluid d-flex align-items-center justify-content-center', ['style' => 'min-height: 100vh;']);
-    echo html_writer::start_div('row justify-content-center');
-    echo html_writer::start_div('col-12 col-md-6 col-lg-4');
-    echo html_writer::start_div('login-container card p-4');
-    
-    echo html_writer::tag('h1', $sitename, ['class' => 'text-center mb-4']);
+    // Main content (login form)
+    echo html_writer::start_div('login-form');
     echo $OUTPUT->main_content();
+    echo html_writer::end_div();
     
     echo html_writer::end_div(); // login-container
-    echo html_writer::end_div(); // col
-    echo html_writer::end_div(); // row
-    echo html_writer::end_div(); // container-fluid
     
     echo $OUTPUT->standard_footer_html();
     echo $OUTPUT->standard_end_of_body_html();

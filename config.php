@@ -54,7 +54,14 @@ $THEME->extrascsscallback = 'theme_ufpel_get_extra_scss';
 $THEME->csstreepostprocessor = 'theme_ufpel_css_tree_post_processor';
 
 // Inherit all layouts from Boost.
-$THEME->layouts = [];
+$THEME->layouts = [
+    // Use parent theme login layout to avoid issues
+    'login' => [
+        'file' => 'login.php',
+        'regions' => [],
+        'options' => ['nofooter' => true, 'nonavbar' => true],
+    ],
+];
 
 // Renderer factory.
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';

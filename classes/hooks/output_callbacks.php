@@ -92,30 +92,22 @@ class output_callbacks {
     
     /**
      * Hook callback for before_http_headers.
+     * Note: This hook doesn't allow modifying headers in Moodle 5.x
+     * Headers should be set via other means (e.g., config, .htaccess)
      *
      * @param before_http_headers $hook The hook instance
      * @return void
      */
     public static function before_http_headers(before_http_headers $hook): void {
-        // Add security headers
-        $headers = $hook->get_headers();
+        // The before_http_headers hook in Moodle 5.x doesn't provide
+        // methods to modify headers directly. Headers should be set
+        // through other mechanisms like:
+        // - Web server configuration (.htaccess, nginx.conf)
+        // - Moodle configuration settings
+        // - Using header() function in appropriate places
         
-        // Content Security Policy
-        if (!isset($headers['Content-Security-Policy'])) {
-            $headers['Content-Security-Policy'] = "default-src 'self'; " .
-                "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com; " .
-                "style-src 'self' 'unsafe-inline' *.googleapis.com; " .
-                "img-src 'self' data: https:; " .
-                "font-src 'self' data: *.gstatic.com;";
-        }
-        
-        // Additional security headers
-        $headers['X-Frame-Options'] = 'SAMEORIGIN';
-        $headers['X-Content-Type-Options'] = 'nosniff';
-        $headers['X-XSS-Protection'] = '1; mode=block';
-        $headers['Referrer-Policy'] = 'strict-origin-when-cross-origin';
-        
-        $hook->set_headers($headers);
+        // This method is kept empty to avoid errors
+        // Security headers should be configured at the web server level
     }
     
     /**
@@ -148,34 +140,45 @@ class output_callbacks {
     protected static function fallback_page_init(\moodle_page $page): void {
         global $CFG;
         
-        // Initialize AMD modules if they exist
-        if (file_exists($CFG->dirroot . '/theme/ufpel/amd/build/theme.min.js')) {
-            $config = [
-                'enableDarkMode' => get_config('theme_ufpel', 'enabledarkmode'),
-                'enableCompactView' => get_config('theme_ufpel', 'enablecompactview'),
-                'enableLazyLoad' => get_config('theme_ufpel', 'enablelazyloading'),
-                'enableStickyHeader' => true,
-                'enableScrollTop' => true,
-                'scrollTopOffset' => 300
-            ];
-            
-            $page->requires->js_call_amd('theme_ufpel/theme', 'init', [$config]);
+        // Only initialize AMD modules if they exist
+        $amdpath = $CFG->dirroot . '/theme/ufpel/amd/build/theme.min.js';
+        $amdsrc = $CFG->dirroot . '/theme/ufpel/amd/src/theme.js';
+        
+        if (file_exists($amdpath) || file_exists($amdsrc)) {
+            try {
+                $config = [
+                    'enableDarkMode' => get_config('theme_ufpel', 'enabledarkmode'),
+                    'enableCompactView' => get_config('theme_ufpel', 'enablecompactview'),
+                    'enableLazyLoad' => get_config('theme_ufpel', 'enablelazyloading'),
+                    'enableStickyHeader' => true,
+                    'enableScrollTop' => true,
+                    'scrollTopOffset' => 300
+                ];
+                
+                $page->requires->js_call_amd('theme_ufpel/theme', 'init', [$config]);
+            } catch (\Exception $e) {
+                // Silently fail if AMD module has issues
+                debugging('Failed to initialize theme AMD module: ' . $e->getMessage(), DEBUG_DEVELOPER);
+            }
         }
         
-        // Add strings for JavaScript
-        if (get_string_manager()->string_exists('darkmodeon', 'theme_ufpel')) {
-            $page->requires->strings_for_js([
-                'darkmodeon',
-                'darkmodeoff',
-                'totop',
-                'skipmain',
-                'loading',
-                'error',
-                'close',
-            ], 'theme_ufpel');
+        // Add strings for JavaScript - with error handling
+        try {
+            if (get_string_manager()->string_exists('darkmodeon', 'theme_ufpel')) {
+                $page->requires->strings_for_js([
+                    'darkmodeon',
+                    'darkmodeoff',
+                    'totop',
+                    'skipmain',
+                    'loading',
+                    'error',
+                    'close',
+                ], 'theme_ufpel');
+            }
+        } catch (\Exception $e) {
+            // Silently fail if strings don't exist
+            debugging('Some theme strings not found: ' . $e->getMessage(), DEBUG_DEVELOPER);
         }
-        
-        // NOTE: Body classes are NOT added here - they are handled in core_renderer::body_attributes()
     }
     
     /**
@@ -290,14 +293,6 @@ class output_callbacks {
             $preloads[] = '<link rel="preload" href="' . $matches[1] . '" as="style">';
         }
         
-        // Preload critical images
-        $logo = get_config('theme_ufpel', 'logo');
-        if (!empty($logo)) {
-            // Logo URL would need to be generated properly
-            // This is a simplified version
-            $preloads[] = '<!-- Logo preload would go here -->';
-        }
-        
         return implode("\n", $preloads);
     }
     
@@ -329,6 +324,7 @@ class output_callbacks {
      */
     protected static function get_footer_scripts(): string {
         // Add any deferred scripts or analytics here
+        // Currently empty but can be extended as needed
         return '';
     }
     

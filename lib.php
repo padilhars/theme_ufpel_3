@@ -512,37 +512,6 @@ function theme_ufpel_get_course_header_data($courseid) {
 }
 
 /**
- * Before standard HTML output.
- * Initialize theme-specific features.
- * 
- * @deprecated since Moodle 5.0 - Use hooks system instead
- * @see \theme_ufpel\hooks\output_callbacks::before_standard_head_html_generation()
- * @return string
- */
-function theme_ufpel_before_standard_html_head() {
-    global $PAGE, $CFG;
-    
-    // Check if we're using the new hooks system (Moodle 5.0+)
-    if (class_exists('\core\hook\output\before_standard_head_html_generation')) {
-        // New hooks system is available, this function shouldn't be called
-        // But we'll still handle it for compatibility
-        debugging('theme_ufpel_before_standard_html_head is deprecated. ' .
-                 'The theme is now using the new hooks system.', DEBUG_DEVELOPER);
-    }
-    
-    // Initialize theme JavaScript and strings only (NO body classes here)
-    theme_ufpel_page_init($PAGE);
-    
-    // Add critical CSS inline for performance
-    $criticalcss = theme_ufpel_get_critical_css();
-    if (!empty($criticalcss)) {
-        return html_writer::tag('style', $criticalcss, ['id' => 'ufpel-critical-css']);
-    }
-    
-    return '';
-}
-
-/**
  * Get critical CSS for inline inclusion.
  *
  * @return string
@@ -639,3 +608,7 @@ function theme_ufpel_get_critical_css() {
     
     return $css;
 }
+
+// NOTE: The function theme_ufpel_before_standard_html_head has been removed
+// as it's deprecated in Moodle 5.x. The functionality is now handled 
+// by the hooks system in classes/hooks/output_callbacks.php

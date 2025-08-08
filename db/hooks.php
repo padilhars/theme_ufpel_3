@@ -36,9 +36,6 @@ $callbacks = [
         'callback' => \theme_ufpel\hooks\output_callbacks::class . '::before_footer_html_generation',
         'priority' => 100,
     ],
-    [
-        'hook' => \core\hook\output\before_http_headers::class,
-        'callback' => \theme_ufpel\hooks\output_callbacks::class . '::before_http_headers',
-        'priority' => 100,
-    ],
+    // Removed before_http_headers hook as it doesn't support header modifications in Moodle 5.x
+    // Security headers should be set at web server level (.htaccess or nginx.conf)
 ];

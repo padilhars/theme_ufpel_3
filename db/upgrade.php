@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme UFPel upgrade script - Updated for Moodle 5.x.
+ * Theme UFPel upgrade script - Updated for Moodle 5.x with hooks migration.
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -210,6 +210,34 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Hooks system migration completed');
         
         upgrade_plugin_savepoint(true, 2025120100, 'theme', 'ufpel');
+    }
+    
+    // Version 2025120102 - Remove deprecated callbacks completely
+    if ($oldversion < 2025120102) {
+        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Removing deprecated callback functions');
+        
+        // Clear all caches to ensure the new system is used
+        purge_all_caches();
+        
+        // Clear compiled mustache templates
+        $cachedir = $CFG->dataroot . '/localcache/mustache';
+        if (is_dir($cachedir)) {
+            $ufpeldir = $cachedir . '/-1/ufpel';
+            if (is_dir($ufpeldir)) {
+                remove_dir($ufpeldir, true);
+                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Cleared compiled mustache templates');
+            }
+        }
+        
+        // Rebuild theme cache
+        theme_reset_all_caches();
+        
+        // Note: The deprecated functions have been removed from lib.php
+        // The new hooks system in classes/hooks/output_callbacks.php handles all functionality
+        
+        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Deprecated callbacks removed, using hooks system exclusively');
+        
+        upgrade_plugin_savepoint(true, 2025120102, 'theme', 'ufpel');
     }
     
     // Always clear theme caches at the end of upgrade
