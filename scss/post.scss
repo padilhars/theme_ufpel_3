@@ -1,0 +1,686 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Post SCSS for theme_ufpel - Bootstrap 5 Compatible.
+ *
+ * @package    theme_ufpel
+ * @copyright  2025 Universidade Federal de Pelotas
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+// ============================================================================
+// Import Utilities
+// ============================================================================
+
+@import "utilities/variables";
+@import "utilities/mixins";
+@import "utilities/functions";
+
+// ============================================================================
+// CSS Custom Properties (CSS Variables)
+// ============================================================================
+
+:root {
+    // Theme colors from settings
+    --ufpel-primary: #{$primarycolor};
+    --ufpel-primary-rgb: #{red($primarycolor)}, #{green($primarycolor)}, #{blue($primarycolor)};
+    --ufpel-secondary: #{$secondarycolor};
+    --ufpel-secondary-rgb: #{red($secondarycolor)}, #{green($secondarycolor)}, #{blue($secondarycolor)};
+    --ufpel-background: #{$backgroundcolor};
+    --ufpel-highlight: #{$highlightcolor};
+    --ufpel-text: #{$contenttextcolor};
+    --ufpel-text-highlight: #{$highlighttextcolor};
+    
+    // Computed variations
+    --ufpel-primary-light: #{lighten($primarycolor, 10%)};
+    --ufpel-primary-dark: #{darken($primarycolor, 10%)};
+    --ufpel-secondary-light: #{lighten($secondarycolor, 10%)};
+    --ufpel-secondary-dark: #{darken($secondarycolor, 10%)};
+    
+    // Spacing
+    --ufpel-spacing-xs: 0.25rem;
+    --ufpel-spacing-sm: 0.5rem;
+    --ufpel-spacing-md: 1rem;
+    --ufpel-spacing-lg: 1.5rem;
+    --ufpel-spacing-xl: 3rem;
+    
+    // Typography
+    --ufpel-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ufpel-font-size-base: 1rem;
+    --ufpel-line-height-base: 1.5;
+    
+    // Transitions
+    --ufpel-transition-speed: 0.3s;
+    --ufpel-transition-timing: ease-in-out;
+    
+    // Shadows
+    --ufpel-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --ufpel-shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --ufpel-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    
+    // Border radius
+    --ufpel-radius-sm: 0.25rem;
+    --ufpel-radius-md: 0.5rem;
+    --ufpel-radius-lg: 0.75rem;
+    
+    // Z-index layers
+    --ufpel-zindex-dropdown: 1000;
+    --ufpel-zindex-sticky: 1020;
+    --ufpel-zindex-fixed: 1030;
+    --ufpel-zindex-offcanvas: 1040;
+    --ufpel-zindex-modal: 1050;
+    --ufpel-zindex-popover: 1060;
+    --ufpel-zindex-tooltip: 1070;
+}
+
+// ============================================================================
+// Base Styles
+// ============================================================================
+
+// Apply theme colors
+body {
+    background-color: var(--ufpel-background);
+    color: var(--ufpel-text);
+    font-family: var(--ufpel-font-family-base);
+    font-size: var(--ufpel-font-size-base);
+    line-height: var(--ufpel-line-height-base);
+}
+
+// Links
+a {
+    color: var(--ufpel-secondary);
+    text-decoration: none;
+    transition: color var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    
+    &:hover,
+    &:focus {
+        color: var(--ufpel-secondary-dark);
+        text-decoration: underline;
+    }
+    
+    &:focus-visible {
+        outline: 3px solid var(--ufpel-secondary);
+        outline-offset: 2px;
+        border-radius: var(--ufpel-radius-sm);
+    }
+}
+
+// ============================================================================
+// Layout Components
+// ============================================================================
+
+// Navbar - Bootstrap 5 compatible
+.navbar {
+    background-color: var(--ufpel-primary);
+    box-shadow: var(--ufpel-shadow-sm);
+    transition: transform var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    
+    &.navbar-hidden {
+        transform: translateY(-100%);
+    }
+    
+    .navbar-brand {
+        color: var(--ufpel-text-highlight);
+        font-weight: 700;
+        font-size: 1.5rem;
+        
+        &:hover,
+        &:focus {
+            color: var(--ufpel-text-highlight);
+            opacity: 0.9;
+        }
+        
+        .logo {
+            max-height: 40px;
+            width: auto;
+        }
+    }
+    
+    .navbar-nav {
+        .nav-link {
+            color: var(--ufpel-text-highlight);
+            transition: opacity var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+            
+            &:hover,
+            &:focus {
+                color: var(--ufpel-text-highlight);
+                opacity: 0.8;
+            }
+            
+            &.active {
+                font-weight: 600;
+                opacity: 1;
+            }
+        }
+    }
+    
+    // Bootstrap 5 utilities
+    .ms-auto {
+        margin-left: auto !important;
+    }
+}
+
+// ============================================================================
+// Course Header
+// ============================================================================
+
+.ufpel-course-header-wrapper {
+    margin-bottom: var(--ufpel-spacing-lg);
+    
+    .ufpel-course-header {
+        position: relative;
+        min-height: 250px;
+        border-radius: var(--ufpel-radius-lg);
+        overflow: hidden;
+        background-color: var(--ufpel-primary);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        
+        @include media-breakpoint-down(md) {
+            min-height: 200px;
+        }
+        
+        @include media-breakpoint-down(sm) {
+            min-height: 150px;
+            border-radius: var(--ufpel-radius-md);
+        }
+        
+        &.no-image {
+            background: linear-gradient(135deg, var(--ufpel-primary) 0%, var(--ufpel-secondary) 100%);
+        }
+        
+        .ufpel-course-header-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            
+            .ufpel-course-header-bg-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        &.has-overlay .ufpel-course-header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.1) 0%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            z-index: 1;
+        }
+        
+        .ufpel-course-header-content {
+            position: relative;
+            z-index: 2;
+            padding: var(--ufpel-spacing-xl) var(--ufpel-spacing-lg);
+            height: 100%;
+            min-height: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            
+            @include media-breakpoint-down(md) {
+                padding: var(--ufpel-spacing-lg);
+            }
+            
+            @include media-breakpoint-down(sm) {
+                padding: var(--ufpel-spacing-md);
+            }
+            
+            .ufpel-course-breadcrumb {
+                .breadcrumb {
+                    background: transparent;
+                    padding: 0;
+                    margin-bottom: var(--ufpel-spacing-sm);
+                    
+                    .breadcrumb-item {
+                        color: rgba(255, 255, 255, 0.8);
+                        
+                        a {
+                            color: rgba(255, 255, 255, 0.9);
+                            
+                            &:hover {
+                                color: white;
+                            }
+                        }
+                        
+                        &.active {
+                            color: white;
+                        }
+                    }
+                }
+            }
+            
+            .ufpel-course-title {
+                color: white;
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: var(--ufpel-spacing-sm);
+                line-height: 1.2;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                
+                @include media-breakpoint-down(md) {
+                    font-size: 2rem;
+                }
+                
+                @include media-breakpoint-down(sm) {
+                    font-size: 1.5rem;
+                }
+            }
+            
+            .ufpel-course-teachers {
+                color: rgba(255, 255, 255, 0.95);
+                font-size: 1.1rem;
+                margin-bottom: var(--ufpel-spacing-sm);
+                
+                .teacher-label {
+                    font-weight: 600;
+                }
+                
+                @include media-breakpoint-down(sm) {
+                    font-size: 1rem;
+                }
+            }
+            
+            .ufpel-course-summary {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 0.95rem;
+                margin-bottom: var(--ufpel-spacing-md);
+                max-width: 800px;
+                
+                @include media-breakpoint-down(sm) {
+                    font-size: 0.9rem;
+                }
+            }
+            
+            .ufpel-course-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--ufpel-spacing-md);
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 0.9rem;
+                
+                .meta-item {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--ufpel-spacing-xs);
+                    
+                    i {
+                        font-size: 1rem;
+                    }
+                }
+                
+                @include media-breakpoint-down(sm) {
+                    font-size: 0.85rem;
+                    gap: var(--ufpel-spacing-sm);
+                }
+            }
+            
+            .ufpel-course-progress {
+                margin-top: var(--ufpel-spacing-md);
+                
+                .progress-label {
+                    color: rgba(255, 255, 255, 0.95);
+                    font-size: 0.9rem;
+                    margin-bottom: var(--ufpel-spacing-xs);
+                }
+                
+                .progress {
+                    height: 8px;
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: var(--ufpel-radius-sm);
+                    overflow: hidden;
+                    
+                    .progress-bar {
+                        background-color: var(--ufpel-highlight);
+                        transition: width var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ============================================================================
+// Cards - Bootstrap 5 Updates
+// ============================================================================
+
+.card {
+    border: none;
+    border-radius: var(--ufpel-radius-md);
+    box-shadow: var(--ufpel-shadow-sm);
+    transition: transform var(--ufpel-transition-speed) var(--ufpel-transition-timing),
+                box-shadow var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--ufpel-shadow-md);
+    }
+    
+    .card-header {
+        background-color: rgba(var(--ufpel-primary-rgb), 0.05);
+        border-bottom: 1px solid rgba(var(--ufpel-primary-rgb), 0.1);
+        font-weight: 600;
+    }
+    
+    .card-body {
+        padding: var(--ufpel-spacing-lg);
+    }
+}
+
+// ============================================================================
+// Buttons - Bootstrap 5 Compatible
+// ============================================================================
+
+.btn {
+    font-weight: 500;
+    border-radius: var(--ufpel-radius-sm);
+    transition: all var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    
+    &:focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 2px;
+    }
+    
+    &.btn-primary {
+        background-color: var(--ufpel-primary);
+        border-color: var(--ufpel-primary);
+        color: var(--ufpel-text-highlight);
+        
+        &:hover:not(:disabled),
+        &:focus:not(:disabled) {
+            background-color: var(--ufpel-primary-dark);
+            border-color: var(--ufpel-primary-dark);
+            color: var(--ufpel-text-highlight);
+        }
+        
+        &:active:not(:disabled) {
+            background-color: var(--ufpel-primary-dark);
+            border-color: var(--ufpel-primary-dark);
+            transform: scale(0.98);
+        }
+    }
+    
+    &.btn-secondary {
+        background-color: var(--ufpel-secondary);
+        border-color: var(--ufpel-secondary);
+        color: white;
+        
+        &:hover:not(:disabled),
+        &:focus:not(:disabled) {
+            background-color: var(--ufpel-secondary-dark);
+            border-color: var(--ufpel-secondary-dark);
+            color: white;
+        }
+    }
+    
+    &.btn-outline-primary {
+        color: var(--ufpel-primary);
+        border-color: var(--ufpel-primary);
+        
+        &:hover:not(:disabled) {
+            background-color: var(--ufpel-primary);
+            border-color: var(--ufpel-primary);
+            color: var(--ufpel-text-highlight);
+        }
+    }
+}
+
+// ============================================================================
+// Forms - Bootstrap 5 Compatible
+// ============================================================================
+
+.form-control,
+.form-select {
+    border-radius: var(--ufpel-radius-sm);
+    border-color: var(--bs-gray-400);
+    transition: border-color var(--ufpel-transition-speed) var(--ufpel-transition-timing),
+                box-shadow var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    
+    &:focus {
+        border-color: var(--ufpel-secondary);
+        box-shadow: 0 0 0 0.25rem rgba(var(--ufpel-secondary-rgb), 0.25);
+    }
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: var(--ufpel-spacing-xs);
+}
+
+// ============================================================================
+// Activity Items
+// ============================================================================
+
+.activity-item {
+    .activity-basis {
+        transition: background-color var(--ufpel-transition-speed) var(--ufpel-transition-timing),
+                    transform var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+        
+        &:hover {
+            background-color: rgba(var(--ufpel-secondary-rgb), 0.05);
+            transform: translateX(2px);
+        }
+    }
+    
+    .activity-icon {
+        transition: transform var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+        
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+// ============================================================================
+// Footer
+// ============================================================================
+
+#page-footer {
+    background-color: var(--ufpel-primary);
+    color: var(--ufpel-text-highlight);
+    padding: var(--ufpel-spacing-xl) 0;
+    margin-top: var(--ufpel-spacing-xl);
+    
+    a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+        
+        &:hover,
+        &:focus {
+            color: white;
+            text-decoration: underline;
+        }
+    }
+    
+    .ufpel-footer-content {
+        padding: var(--ufpel-spacing-lg) 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: var(--ufpel-spacing-lg);
+    }
+}
+
+// ============================================================================
+// Scroll to Top Button
+// ============================================================================
+
+.ufpel-scroll-top {
+    position: fixed;
+    bottom: var(--ufpel-spacing-lg);
+    right: var(--ufpel-spacing-lg);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all var(--ufpel-transition-speed) var(--ufpel-transition-timing);
+    z-index: var(--ufpel-zindex-fixed);
+    
+    &.visible {
+        opacity: 0.9;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    &:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+// ============================================================================
+// Accessibility - Bootstrap 5 Updates
+// ============================================================================
+
+// Updated screen reader only class for Bootstrap 5
+.visually-hidden {
+    @include visually-hidden();
+}
+
+.visually-hidden-focusable {
+    @include visually-hidden-focusable();
+}
+
+// Skip links
+.skip-main {
+    @include visually-hidden-focusable();
+    
+    &:focus {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: var(--ufpel-zindex-tooltip);
+        padding: var(--ufpel-spacing-sm) var(--ufpel-spacing-md);
+        background-color: var(--ufpel-primary);
+        color: var(--ufpel-text-highlight);
+        text-decoration: none;
+        border-radius: 0 0 var(--ufpel-radius-md) 0;
+        box-shadow: var(--ufpel-shadow-md);
+    }
+}
+
+// ============================================================================
+// Dark Mode Support
+// ============================================================================
+
+.ufpel-dark-mode {
+    --ufpel-background: #1a1a1a;
+    --ufpel-text: #e6e6e6;
+    --ufpel-primary-light: #{lighten($primarycolor, 15%)};
+    --ufpel-secondary-light: #{lighten($secondarycolor, 15%)};
+    
+    .card {
+        background-color: #2d2d2d;
+        color: var(--ufpel-text);
+    }
+    
+    .form-control,
+    .form-select {
+        background-color: #2d2d2d;
+        border-color: #404040;
+        color: var(--ufpel-text);
+        
+        &:focus {
+            background-color: #2d2d2d;
+            color: var(--ufpel-text);
+        }
+    }
+}
+
+// ============================================================================
+// Responsive Utilities
+// ============================================================================
+
+// Mobile specific styles
+.ufpel-mobile {
+    .ufpel-course-header {
+        min-height: 150px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+// Tablet specific styles
+.ufpel-tablet {
+    .ufpel-course-header {
+        min-height: 200px;
+    }
+}
+
+// Desktop specific styles
+.ufpel-desktop {
+    .container-fluid {
+        max-width: 1400px;
+    }
+}
+
+// ============================================================================
+// Print Styles
+// ============================================================================
+
+@media print {
+    .navbar,
+    .drawer,
+    #page-footer,
+    .ufpel-scroll-top,
+    .ufpel-course-header-background,
+    .activity-navigation,
+    .secondary-navigation {
+        display: none !important;
+    }
+    
+    .ufpel-course-header {
+        min-height: auto;
+        padding: var(--ufpel-spacing-md);
+        background: none;
+        border: 1px solid #000;
+        
+        .ufpel-course-header-content {
+            position: static;
+            padding: 0;
+            
+            * {
+                color: #000 !important;
+                text-shadow: none !important;
+            }
+        }
+    }
+    
+    #region-main {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+}

@@ -1,0 +1,43 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_ufpel/login_background
+
+    Login background template for UFPel theme.
+
+    Context variables required for this template:
+    * backgroundurl - URL of the background image
+    * backgroundalt - Alt text for the background image
+
+    Example context (json):
+    {
+        "backgroundurl": "https://example.com/login-bg.jpg",
+        "backgroundalt": "Login background image"
+    }
+}}
+<div class="login-background-wrapper" data-region="login-background">
+    <div class="login-background-overlay" aria-hidden="true"></div>
+    <picture class="login-background-image">
+        <source media="(min-width: 1200px)" data-srcset="{{backgroundurl}}">
+        <source media="(min-width: 768px)" data-srcset="{{backgroundurl}}">
+        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E"
+             data-src="{{backgroundurl}}"
+             alt="{{backgroundalt}}"
+             class="lazyload"
+             loading="lazy">
+    </picture>
+</div>

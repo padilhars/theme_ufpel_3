@@ -1,0 +1,108 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_ufpel/login
+
+    Login page template for UFPel theme.
+
+    Context variables required for this template:
+    * sitename - The site name
+    * output - The output renderer
+    * bodyattributes - Body tag attributes
+    * loginbackground - HTML for login background image
+    * doctype - DOCTYPE declaration
+    * htmlattributes - HTML tag attributes
+    * headhtml - Standard head HTML
+    * topofbodyhtml - Standard top of body HTML
+    * standardfooterhtml - Standard footer HTML
+    * standardendbodyhtml - Standard end of body HTML
+    * currentyear - Current year for copyright
+}}
+{{{ doctype }}}
+<html {{{ htmlattributes }}}>
+<head>
+    <title>{{#str}}login{{/str}} - {{{ sitename }}}</title>
+    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
+    {{{ headhtml }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body {{{ bodyattributes }}}>
+{{{ loginbackground }}}
+
+<div id="page-wrapper" class="d-flex flex-column h-100">
+    {{{ topofbodyhtml }}}
+
+    <div id="page" class="container-fluid d-flex align-items-center justify-content-center flex-fill">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="login-container card">
+                    <div class="card-body p-4">
+                        <div class="login-logo text-center mb-4">
+                            <h1 class="h2 mb-0 text-primary">{{{ sitename }}}</h1>
+                        </div>
+
+                        <div class="login-form">
+                            <div id="region-main-box">
+                                <section id="region-main" class="region-main-content" aria-label="{{#str}}content{{/str}}">
+                                    {{{ output.course_content_header }}}
+                                    {{{ output.main_content }}}
+                                    {{{ output.course_content_footer }}}
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="login-divider text-center my-3">
+                            <hr>
+                        </div>
+
+                        <div class="login-options text-center">
+                            {{#output.login_signup_url}}
+                            <p class="mb-1">
+                                {{#str}}firsttime{{/str}}
+                                <a href="{{{ output.login_signup_url }}}">{{#str}}startsignup{{/str}}</a>
+                            </p>
+                            {{/output.login_signup_url}}
+                            
+                            <p class="mb-0">
+                                <a href="{{{ config.wwwroot }}}/login/forgot_password.php">{{#str}}forgotten{{/str}}</a>
+                            </p>
+                        </div>
+
+                        <div class="login-footer text-center mt-4 text-muted small">
+                            <p class="mb-1">© {{currentyear}} Universidade Federal de Pelotas</p>
+                            <p class="mb-0">
+                                <a href="{{{ config.wwwroot }}}" class="text-muted">{{#str}}home{{/str}}</a>
+                                {{#output.page_doc_link}}
+                                    | <a href="{{{ output.page_doc_link }}}" class="text-muted">{{#str}}moodledocs{{/str}}</a>
+                                {{/output.page_doc_link}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="page-footer" class="mt-auto">
+        {{{ standardfooterhtml }}}
+    </footer>
+</div>
+
+{{{ standardendbodyhtml }}}
+</body>
+</html>

@@ -1,0 +1,201 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_ufpel/course_header_full
+
+    Complete course header template for UFPel theme.
+
+    Context variables required for this template:
+    * showcourseheader - Whether to show the course header
+    * imageurl - URL of the course image (optional)
+    * hasimage - Whether there is an image
+    * coursename - The course full name
+    * courseshortname - The course short name
+    * hasteachers - Whether there are teachers to display
+    * teachers - Array of teacher objects
+    * teacherlabel - Label for teachers
+    * hasoverlay - Whether to show overlay
+    * hascategories - Whether there are categories
+    * categories - Array of category objects
+    * hassummary - Whether there is a summary
+    * coursesummary - Course summary text
+    * hasprogress - Whether to show progress
+    * progress - Progress percentage
+    * progresspercentage - Rounded progress percentage
+    * hascustomfields - Whether there are custom fields
+    * customfields - Array of custom field objects
+    * hasenrollmentinfo - Whether there is enrollment info
+    * enrollmentinfo - Enrollment information object
+
+    Example context (json):
+    {
+        "showcourseheader": true,
+        "imageurl": "https://example.com/course-image.jpg",
+        "hasimage": true,
+        "coursename": "Introduction to Computer Science",
+        "courseshortname": "CS101",
+        "hasteachers": true,
+        "teachers": [
+            {
+                "name": "John Doe",
+                "last": false
+            },
+            {
+                "name": "Jane Smith",
+                "last": true
+            }
+        ],
+        "teacherlabel": "Teachers",
+        "hasoverlay": true,
+        "hascategories": true,
+        "categories": [
+            {
+                "name": "Technology",
+                "url": "/course/index.php?categoryid=1"
+            }
+        ],
+        "hassummary": true,
+        "coursesummary": "This course introduces fundamental concepts...",
+        "hasprogress": true,
+        "progress": 75.5,
+        "progresspercentage": 76,
+        "hascustomfields": false,
+        "hasenrollmentinfo": true,
+        "enrollmentinfo": {
+            "enrolledusers": 150,
+            "enrolleduserstext": "150 enrolled users",
+            "startdate": "1 Sep 2025",
+            "enddate": "31 Dec 2025"
+        }
+    }
+}}
+{{#showcourseheader}}
+<div class="ufpel-course-header-wrapper" data-region="course-header">
+    <div class="ufpel-course-header{{#hasoverlay}} has-overlay{{/hasoverlay}}{{^hasimage}} no-image{{/hasimage}}" 
+         {{#hasimage}}data-background-url="{{imageurl}}"{{/hasimage}}
+         role="banner"
+         aria-label="{{#str}}courseheader, theme_ufpel{{/str}}">
+        
+        {{#hasimage}}
+        <div class="ufpel-course-header-background">
+            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E"
+                 data-src="{{imageurl}}"
+                 loading="lazy"
+                 class="ufpel-course-header-bg-image lazyload"
+                 alt="">
+        </div>
+        {{/hasimage}}
+        
+        {{#hasoverlay}}
+        <div class="ufpel-course-header-overlay" aria-hidden="true"></div>
+        {{/hasoverlay}}
+        
+        <div class="ufpel-course-header-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        {{#hascategories}}
+                        <nav class="ufpel-course-breadcrumb" aria-label="{{#str}}breadcrumb{{/str}}">
+                            <ol class="breadcrumb">
+                                {{#categories}}
+                                <li class="breadcrumb-item">
+                                    <a href="{{url}}">{{name}}</a>
+                                </li>
+                                {{/categories}}
+                            </ol>
+                        </nav>
+                        {{/hascategories}}
+                        
+                        <h1 class="ufpel-course-title">{{coursename}}</h1>
+                        
+                        {{#hasteachers}}
+                        <div class="ufpel-course-teachers">
+                            <span class="teacher-label">{{teacherlabel}}:</span>
+                            <span class="teacher-list">
+                                {{#teachers}}
+                                    <span class="teacher-name">{{name}}</span>{{^last}}, {{/last}}
+                                {{/teachers}}
+                            </span>
+                        </div>
+                        {{/hasteachers}}
+                        
+                        {{#hassummary}}
+                        <div class="ufpel-course-summary">
+                            {{{coursesummary}}}
+                        </div>
+                        {{/hassummary}}
+                        
+                        {{#hasenrollmentinfo}}
+                        <div class="ufpel-course-meta">
+                            {{#enrollmentinfo.enrolledusers}}
+                            <span class="meta-item enrolled-users">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                {{enrollmentinfo.enrolleduserstext}}
+                            </span>
+                            {{/enrollmentinfo.enrolledusers}}
+                            
+                            {{#enrollmentinfo.startdate}}
+                            <span class="meta-item start-date">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                {{#str}}startdate{{/str}}: {{enrollmentinfo.startdate}}
+                            </span>
+                            {{/enrollmentinfo.startdate}}
+                            
+                            {{#enrollmentinfo.enddate}}
+                            <span class="meta-item end-date">
+                                <i class="fa fa-calendar-times-o" aria-hidden="true"></i>
+                                {{#str}}enddate{{/str}}: {{enrollmentinfo.enddate}}
+                            </span>
+                            {{/enrollmentinfo.enddate}}
+                        </div>
+                        {{/hasenrollmentinfo}}
+                        
+                        {{#hasprogress}}
+                        <div class="ufpel-course-progress">
+                            <div class="progress-label">
+                                {{#str}}progress, core_completion{{/str}}: {{progresspercentage}}%
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" 
+                                     role="progressbar" 
+                                     style="width: {{progress}}%"
+                                     aria-valuenow="{{progress}}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                    <span class="visually-hidden">{{progresspercentage}}% {{#str}}complete{{/str}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {{/hasprogress}}
+                        
+                        {{#hascustomfields}}
+                        <div class="ufpel-course-customfields">
+                            {{#customfields}}
+                            <div class="customfield-item">
+                                <span class="customfield-name">{{name}}:</span>
+                                <span class="customfield-value">{{{value}}}</span>
+                            </div>
+                            {{/customfields}}
+                        </div>
+                        {{/hascustomfields}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/showcourseheader}}
