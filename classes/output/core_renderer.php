@@ -29,7 +29,6 @@ use moodle_url;
 use context_course;
 use cache;
 use stdClass;
-use theme_ufpel\output\course_header;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -118,8 +117,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $header;
         }
         
+        // Check if course_header class exists
+        if (!class_exists('\theme_ufpel\output\course_header')) {
+            return $header;
+        }
+        
         // Get course header renderable.
-        $courseheader = new course_header($COURSE, $this->page);
+        $courseheader = new \theme_ufpel\output\course_header($COURSE, $this->page);
         
         // Render course header using template.
         $customheader = $this->render($courseheader);
@@ -131,10 +135,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Render course header from template.
      *
-     * @param course_header $courseheader
+     * @param \theme_ufpel\output\course_header $courseheader
      * @return string HTML
      */
-    protected function render_course_header(course_header $courseheader) {
+    protected function render_course_header(\theme_ufpel\output\course_header $courseheader) {
         $data = $courseheader->export_for_template($this);
         return $this->render_from_template('theme_ufpel/course_header_full', $data);
     }
@@ -296,7 +300,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'loginurl' => (new moodle_url('/login/index.php'))->out(false),
             'homeurl' => (new moodle_url('/'))->out(false),
             'privacyurl' => (new moodle_url('/admin/tool/policy/index.php'))->out(false),
-            'contacturl' => (new moodle_url('/user/contactsitesupport.php'))->out(false)
+            'contacturl' => (new moodle_url('/user/contactsitesupport.php'))->out(false),
+            'sociallinks' => $this->get_social_links(),
+            'hassociallinks' => !empty($this->get_social_links())
         ];
         
         // Render custom footer
@@ -352,24 +358,31 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
     
     /**
-     * Override construct_user_menu to add custom items.
+     * Construct user menu.
+     * Note: In Moodle 5.x, this method signature might be different
      *
-     * @param stdClass $user
-     * @return array
+     * @param stdClass|null $user The user object
+     * @return array|string The user menu
      */
-    public function construct_user_menu($user) {
+    public function construct_user_menu($user = null) {
+        // Get the parent menu first
         $usermenu = parent::construct_user_menu($user);
         
-        // Add theme preferences link
+        // Only add our custom item if user is logged in
         if (isloggedin() && !isguestuser()) {
-            $preferencesurl = new moodle_url('/theme/ufpel/preferences.php');
-            $usermenu[] = [
-                'itemtype' => 'link',
-                'url' => $preferencesurl->out(false),
-                'title' => get_string('themepreferences', 'theme_ufpel'),
-                'icon' => 'i/settings',
-                'pix' => 'i/settings'
-            ];
+            // Check if the parent returned an array (expected in most versions)
+            if (is_array($usermenu)) {
+                $preferencesurl = new moodle_url('/theme/ufpel/preferences.php');
+                
+                // Add theme preferences link to the menu
+                $usermenu[] = [
+                    'itemtype' => 'link',
+                    'url' => $preferencesurl->out(false),
+                    'title' => get_string('themepreferences', 'theme_ufpel'),
+                    'icon' => 'i/settings',
+                    'pix' => 'i/settings'
+                ];
+            }
         }
         
         return $usermenu;

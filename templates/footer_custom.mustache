@@ -17,29 +17,7 @@
 {{!
     @template theme_ufpel/footer_custom
 
-    Custom footer template for UFPel theme.
-
-    Context variables required for this template:
-    * footercontent - Custom footer content HTML
-    * hasfootercontent - Whether there is custom footer content
-    * year - Current year
-    * sitename - Site name
-    * loginurl - Login URL
-    * homeurl - Home URL
-    * privacyurl - Privacy policy URL
-    * contacturl - Contact URL
-
-    Example context (json):
-    {
-        "footercontent": "<p>Custom footer content</p>",
-        "hasfootercontent": true,
-        "year": "2025",
-        "sitename": "UFPel Moodle",
-        "loginurl": "/login/index.php",
-        "homeurl": "/",
-        "privacyurl": "/admin/tool/policy/index.php",
-        "contacturl": "/user/contactsitesupport.php"
-    }
+    Custom footer template for UFPel theme - Using only existing Moodle strings
 }}
 <footer id="ufpel-footer" class="ufpel-footer" role="contentinfo">
     {{#hasfootercontent}}
@@ -86,7 +64,7 @@
                             <li>
                                 <a href="{{homeurl}}">
                                     <i class="fa fa-home" aria-hidden="true"></i>
-                                    {{#str}}home{{/str}}
+                                    {{#str}}home, core{{/str}}
                                 </a>
                             </li>
                             <li>
@@ -104,7 +82,7 @@
                             <li>
                                 <a href="/calendar/view.php">
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    {{#str}}calendar{{/str}}
+                                    {{#str}}calendar, core_calendar{{/str}}
                                 </a>
                             </li>
                         </ul>
@@ -152,7 +130,7 @@
                             <li>
                                 <a href="{{privacyurl}}">
                                     <i class="fa fa-shield" aria-hidden="true"></i>
-                                    {{#str}}privacyandpolicies, admin{{/str}}
+                                    {{#str}}privacy{{/str}}
                                 </a>
                             </li>
                             <li>
@@ -164,7 +142,7 @@
                             <li>
                                 <a href="/admin/tool/dataprivacy/summary.php">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
-                                    {{#str}}dataprivacy, privacy{{/str}}
+                                    {{#str}}pluginname, tool_dataprivacy{{/str}}
                                 </a>
                             </li>
                         </ul>
