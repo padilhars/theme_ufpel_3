@@ -63,6 +63,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     
     /**
      * Get the logo URL.
+     * IMPORTANT: This method MUST return a moodle_url object or null to maintain compatibility with Moodle core.
      *
      * @param int|null $maxwidth The maximum width, or null when the maximum width does not matter.
      * @param int $maxheight The maximum height, or null when the maximum height does not matter.
@@ -71,12 +72,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
         // Check if we have a custom logo from theme settings
         $logo = $this->page->theme->setting_file_url('logo', 'logo');
+        
         if (!empty($logo)) {
-            // Return as moodle_url object to match expected type
-            if (!($logo instanceof moodle_url)) {
-                $logo = new moodle_url($logo);
+            // If it's already a moodle_url object, return it directly
+            if ($logo instanceof moodle_url) {
+                return $logo;
             }
-            return $logo;
+            
+            // If it's not a moodle_url, we need to be careful about how we handle it
+            // The setting_file_url method might return the URL as a string
+            // We need to ensure we return a moodle_url object
+            
+            // Convert to string to check the URL format
+            $logostr = (string)$logo;
+            
+            // Return a moodle_url object
+            // Note: moodle_url constructor handles absolute URLs correctly
+            // It won't duplicate the domain if the URL is already absolute
+            return new moodle_url($logostr);
         }
         
         // Fall back to parent implementation if no custom logo
@@ -91,6 +104,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function navbar_brand() {
         $logourl = $this->get_logo_url(null, 40);
         
+        // Since get_logo_url returns a moodle_url object or null, handle appropriately
         $templatecontext = [
             'logourl' => $logourl ? $logourl->out(false) : null,
             'sitename' => format_string($this->page->course->shortname, true, 
@@ -295,6 +309,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Fall back to main logo
         $mainlogo = $this->get_logo_url();
         if ($mainlogo) {
+            // get_logo_url returns a moodle_url object or null
             return $mainlogo->out(false);
         }
         return null;

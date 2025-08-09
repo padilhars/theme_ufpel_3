@@ -202,7 +202,7 @@ class course_header implements renderable, templatable {
                         $this->context->id,
                         'course',
                         'overviewfiles',
-                        0,
+                        null,
                         '/',
                         $file->get_filename()
                     )->out();

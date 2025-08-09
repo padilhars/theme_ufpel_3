@@ -323,6 +323,97 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025120200, 'theme', 'ufpel');
     }
     
+    // Version 2025120201 - Fix course header image loading issue
+    if ($oldversion < 2025120201) {
+        mtrace('theme_ufpel: Fixing course header image loading issue');
+        
+        // Clear all template caches
+        $cachedir = $CFG->dataroot . '/localcache/mustache/-1/ufpel';
+        if (is_dir($cachedir)) {
+            // Remove all cached templates
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($cachedir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            
+            foreach ($iterator as $file) {
+                if ($file->isFile()) {
+                    unlink($file->getPathname());
+                } elseif ($file->isDir()) {
+                    rmdir($file->getPathname());
+                }
+            }
+            
+            @rmdir($cachedir);
+            mtrace('theme_ufpel: Cleared all cached templates for image fix');
+        }
+        
+        // Clear JavaScript cache
+        $jscachedir = $CFG->dataroot . '/localcache/js';
+        if (is_dir($jscachedir)) {
+            $jsfiles = glob($jscachedir . '/*ufpel*');
+            foreach ($jsfiles as $jsfile) {
+                if (is_file($jsfile)) {
+                    unlink($jsfile);
+                }
+            }
+            mtrace('theme_ufpel: Cleared JavaScript cache');
+        }
+        
+        // Clear all caches
+        theme_reset_all_caches();
+        purge_all_caches();
+        
+        // Rebuild course cache to ensure new template is used
+        rebuild_course_cache(0, true);
+        
+        mtrace('theme_ufpel: Course header image loading issue fixed');
+        mtrace('theme_ufpel: Templates now use direct image loading instead of lazy loading for course headers');
+        
+        upgrade_plugin_savepoint(true, 2025120201, 'theme', 'ufpel');
+    }
+    
+    // Version 2025120202 - Fix login page logo URL duplication issue
+    if ($oldversion < 2025120202) {
+        mtrace('theme_ufpel: Fixing login page logo URL duplication issue');
+        
+        // Clear all template caches
+        $cachedir = $CFG->dataroot . '/localcache/mustache/-1/ufpel';
+        if (is_dir($cachedir)) {
+            // Remove all cached templates
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($cachedir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            
+            foreach ($iterator as $file) {
+                if ($file->isFile()) {
+                    unlink($file->getPathname());
+                } elseif ($file->isDir()) {
+                    rmdir($file->getPathname());
+                }
+            }
+            
+            @rmdir($cachedir);
+            mtrace('theme_ufpel: Cleared all cached templates for URL fix');
+        }
+        
+        // Clear PHP cache if opcache is enabled
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+            mtrace('theme_ufpel: Cleared PHP opcache');
+        }
+        
+        // Clear all caches
+        theme_reset_all_caches();
+        purge_all_caches();
+        
+        mtrace('theme_ufpel: Login page logo URL duplication issue fixed');
+        mtrace('theme_ufpel: URLs are now properly handled to prevent duplication');
+        
+        upgrade_plugin_savepoint(true, 2025120202, 'theme', 'ufpel');
+    }
+    
     // Always clear theme caches at the end of upgrade
     theme_reset_all_caches();
     

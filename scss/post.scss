@@ -34,6 +34,7 @@
 // ============================================================================
 
 @import "components/login";
+@import "components/course_header";
 
 // ============================================================================
 // CSS Custom Properties (CSS Variables)
@@ -169,87 +170,6 @@ a {
             &.active {
                 font-weight: 600;
                 opacity: 1;
-            }
-        }
-    }
-}
-
-// ============================================================================
-// Course Header
-// ============================================================================
-
-.ufpel-course-header-wrapper {
-    margin-bottom: var(--ufpel-spacing-lg);
-    
-    .ufpel-course-header {
-        position: relative;
-        min-height: 250px;
-        border-radius: var(--ufpel-radius-lg);
-        overflow: hidden;
-        background-color: var(--ufpel-primary);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        
-        @media (max-width: 768px) {
-            min-height: 200px;
-        }
-        
-        @media (max-width: 576px) {
-            min-height: 150px;
-            border-radius: var(--ufpel-radius-md);
-        }
-        
-        &.no-image {
-            background: linear-gradient(135deg, var(--ufpel-primary) 0%, var(--ufpel-secondary) 100%);
-        }
-        
-        .ufpel-course-header-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            
-            .ufpel-course-header-bg-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-        
-        &.has-overlay .ufpel-course-header-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(0, 0, 0, 0.1) 0%,
-                rgba(0, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.6) 100%
-            );
-            z-index: 1;
-        }
-        
-        .ufpel-course-header-content {
-            position: relative;
-            z-index: 2;
-            padding: var(--ufpel-spacing-xl) var(--ufpel-spacing-lg);
-            height: 100%;
-            min-height: inherit;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            
-            @media (max-width: 768px) {
-                padding: var(--ufpel-spacing-lg);
-            }
-            
-            @media (max-width: 576px) {
-                padding: var(--ufpel-spacing-md);
             }
         }
     }

@@ -53,6 +53,7 @@ define([
             WRAPPER: '.ufpel-course-header-wrapper',
             HEADER: '.ufpel-course-header',
             BACKGROUND: '.ufpel-course-header-background',
+            BACKGROUND_IMAGE: '.ufpel-course-header-bg-image',
             CONTENT: '.ufpel-course-header-content',
             PROGRESS: '.ufpel-course-progress',
             PROGRESS_BAR: '.progress-bar',
@@ -71,7 +72,8 @@ define([
             COLLAPSED: 'collapsed',
             LOADING: 'loading',
             HAS_BACKGROUND: 'has-background',
-            PARALLAX: 'parallax-enabled'
+            PARALLAX: 'parallax-enabled',
+            LOADED: 'loaded'
         },
 
         /**
@@ -92,6 +94,9 @@ define([
             }
 
             this.wrapper = this.element.closest(this.SELECTORS.WRAPPER);
+            
+            // Load any lazy images immediately for course header
+            this.loadLazyImages();
             this.setupBackgroundImage();
             this.setupParallaxEffect();
             this.setupProgressAnimation();
@@ -102,41 +107,92 @@ define([
         },
 
         /**
-         * Setup background image with lazy loading.
+         * Load lazy images in the course header immediately.
+         * 
+         * @method loadLazyImages
+         * @return {void}
+         */
+        loadLazyImages: function() {
+            // Find all images with data-src in the course header
+            const lazyImages = this.element.querySelectorAll('img[data-src]');
+            
+            lazyImages.forEach((img) => {
+                const src = img.dataset.src;
+                if (src) {
+                    // Load the image
+                    const tempImg = new Image();
+                    tempImg.onload = () => {
+                        img.src = src;
+                        img.classList.add(this.CLASSES.LOADED);
+                        // Remove data-src after loading
+                        delete img.dataset.src;
+                        
+                        // If it's a background image, also set it as CSS background
+                        if (img.classList.contains('ufpel-course-header-bg-image')) {
+                            const parent = img.closest(this.SELECTORS.HEADER);
+                            if (parent) {
+                                parent.style.backgroundImage = `url('${src}')`;
+                                parent.classList.add(this.CLASSES.HAS_BACKGROUND);
+                                // Hide the img element as we're using CSS background
+                                img.style.display = 'none';
+                            }
+                        }
+                    };
+                    
+                    tempImg.onerror = () => {
+                        console.error('Failed to load course header image:', src);
+                        // Fallback: try to load directly
+                        img.src = src;
+                    };
+                    
+                    // Start loading
+                    tempImg.src = src;
+                }
+            });
+        },
+
+        /**
+         * Setup background image with proper loading.
          * 
          * @method setupBackgroundImage
          * @return {void}
          */
         setupBackgroundImage: function() {
+            // Check if there's a data-background-url attribute
             const bgUrl = this.element.dataset.backgroundUrl;
-            if (!bgUrl) {
-                return;
-            }
-
-            // Create an image element for preloading
-            const img = new Image();
-            
-            img.onload = () => {
-                this.element.style.backgroundImage = `url('${bgUrl}')`;
-                this.element.classList.add(this.CLASSES.HAS_BACKGROUND);
+            if (bgUrl) {
+                // Create an image element for preloading
+                const img = new Image();
                 
-                // Fade in effect
-                requestAnimationFrame(() => {
-                    this.element.style.opacity = '0';
-                    this.element.offsetHeight; // Force reflow
-                    this.element.style.transition = 'opacity 0.5s ease-in-out';
-                    this.element.style.opacity = '1';
-                });
-            };
+                img.onload = () => {
+                    this.element.style.backgroundImage = `url('${bgUrl}')`;
+                    this.element.classList.add(this.CLASSES.HAS_BACKGROUND);
+                    
+                    // Fade in effect
+                    requestAnimationFrame(() => {
+                        this.element.style.opacity = '0';
+                        this.element.offsetHeight; // Force reflow
+                        this.element.style.transition = 'opacity 0.5s ease-in-out';
+                        this.element.style.opacity = '1';
+                    });
+                };
+                
+                img.onerror = () => {
+                    console.error('Failed to load course header background image:', bgUrl);
+                    // Fallback to gradient
+                    this.element.classList.add('no-image');
+                };
+                
+                // Start loading
+                img.src = bgUrl;
+            }
             
-            img.onerror = () => {
-                console.error('Failed to load course header image:', bgUrl);
-                // Fallback to gradient
-                this.element.classList.add('no-image');
-            };
-            
-            // Start loading
-            img.src = bgUrl;
+            // Also check for existing background image in CSS
+            const computedStyle = window.getComputedStyle(this.element);
+            const existingBg = computedStyle.backgroundImage;
+            if (existingBg && existingBg !== 'none') {
+                this.element.classList.add(this.CLASSES.HAS_BACKGROUND);
+            }
         },
 
         /**
@@ -196,24 +252,32 @@ define([
             progressBar.style.width = '0%';
             
             // Use Intersection Observer for animation trigger
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Animate progress bar
-                        setTimeout(() => {
-                            progressBar.style.transition = 'width 1.5s ease-out';
-                            progressBar.style.width = targetWidth;
-                        }, 200);
-                        
-                        // Stop observing once animated
-                        observer.unobserve(entry.target);
-                    }
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Animate progress bar
+                            setTimeout(() => {
+                                progressBar.style.transition = 'width 1.5s ease-out';
+                                progressBar.style.width = targetWidth;
+                            }, 200);
+                            
+                            // Stop observing once animated
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.5
                 });
-            }, {
-                threshold: 0.5
-            });
 
-            observer.observe(progressBar.closest(this.SELECTORS.PROGRESS));
+                observer.observe(progressBar.closest(this.SELECTORS.PROGRESS));
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                setTimeout(() => {
+                    progressBar.style.transition = 'width 1.5s ease-out';
+                    progressBar.style.width = targetWidth;
+                }, 500);
+            }
         },
 
         /**

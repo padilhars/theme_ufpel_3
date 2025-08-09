@@ -612,3 +612,137 @@ function theme_ufpel_get_critical_css() {
 // NOTE: The function theme_ufpel_before_standard_html_head has been removed
 // as it's deprecated in Moodle 5.x. The functionality is now handled 
 // by the hooks system in classes/hooks/output_callbacks.php
+
+/**
+ * Process a file URL to ensure it's not duplicated.
+ * This helper function handles the conversion of theme file URLs
+ * to prevent duplication issues.
+ *
+ * @param mixed $url The URL to process (can be string, moodle_url, or null)
+ * @return string|null The processed URL string or null if empty
+ */
+function theme_ufpel_process_file_url($url) {
+    if (empty($url)) {
+        return null;
+    }
+    
+    // If it's already a moodle_url object, get its string representation
+    if ($url instanceof moodle_url) {
+        return $url->out(false);
+    }
+    
+    // Convert to string for processing
+    $urlstr = (string)$url;
+    
+    // Check if it's empty after conversion
+    if (empty($urlstr)) {
+        return null;
+    }
+    
+    // Check if it's already an absolute URL
+    // Matches: http://, https://, // (protocol-relative)
+    if (preg_match('#^(https?:)?//#', $urlstr)) {
+        // It's already absolute, return as is
+        return $urlstr;
+    }
+    
+    // Check if it starts with a slash (site-relative URL)
+    if (strpos($urlstr, '/') === 0) {
+        global $CFG;
+        // It's a site-relative URL, prepend the wwwroot
+        return $CFG->wwwroot . $urlstr;
+    }
+    
+    // It's a relative URL or needs processing
+    // Create a proper moodle_url and return its string representation
+    try {
+        $moodleurl = new moodle_url($urlstr);
+        return $moodleurl->out(false);
+    } catch (Exception $e) {
+        // If there's an error creating the URL, return the original
+        debugging('Error processing URL in theme_ufpel: ' . $e->getMessage(), DEBUG_DEVELOPER);
+        return $urlstr;
+    }
+}
+
+/**
+ * Validate and clean a file URL to ensure it's properly formatted.
+ * This function also checks for common issues like URL duplication.
+ *
+ * @param string $url The URL to validate
+ * @return string|false The cleaned URL or false if invalid
+ */
+function theme_ufpel_validate_file_url($url) {
+    if (empty($url)) {
+        return false;
+    }
+    
+    // Convert to string if needed
+    if (is_object($url) && method_exists($url, '__toString')) {
+        $url = (string)$url;
+    }
+    
+    if (!is_string($url)) {
+        return false;
+    }
+    
+    // Check for URL duplication
+    // This pattern catches URLs like: http://domain//domain/path
+    if (preg_match('#^(https?://[^/]+)/+\1#i', $url)) {
+        // URL is duplicated, try to fix it
+        debugging('Duplicated URL detected in theme_ufpel: ' . $url, DEBUG_DEVELOPER);
+        
+        // Extract the duplicated part and remove it
+        $parsed = parse_url($url);
+        if ($parsed && isset($parsed['scheme']) && isset($parsed['host'])) {
+            $base = $parsed['scheme'] . '://' . $parsed['host'];
+            $path = isset($parsed['path']) ? $parsed['path'] : '';
+            
+            // Remove the duplicated base from the path if it exists
+            $path = preg_replace('#^/+' . preg_quote($parsed['host'], '#') . '#', '', $path);
+            
+            // Reconstruct the URL
+            $url = $base . $path;
+            if (isset($parsed['query'])) {
+                $url .= '?' . $parsed['query'];
+            }
+            if (isset($parsed['fragment'])) {
+                $url .= '#' . $parsed['fragment'];
+            }
+        }
+    }
+    
+    // Additional validation
+    $parsed = parse_url($url);
+    if (!$parsed || !isset($parsed['path'])) {
+        return false;
+    }
+    
+    // Check for double slashes in the path (except at the beginning)
+    $path = $parsed['path'];
+    $path = preg_replace('#/{2,}#', '/', $path);
+    
+    // Rebuild the URL with the cleaned path
+    $cleanurl = '';
+    if (isset($parsed['scheme'])) {
+        $cleanurl .= $parsed['scheme'] . '://';
+    }
+    if (isset($parsed['host'])) {
+        $cleanurl .= $parsed['host'];
+    }
+    if (isset($parsed['port'])) {
+        $cleanurl .= ':' . $parsed['port'];
+    }
+    $cleanurl .= $path;
+    if (isset($parsed['query'])) {
+        $cleanurl .= '?' . $parsed['query'];
+    }
+    if (isset($parsed['fragment'])) {
+        $cleanurl .= '#' . $parsed['fragment'];
+    }
+    
+    return $cleanurl;
+}
+
+// Add this to the existing lib.php file, do not duplicate the entire file
+// These are helper functions to be added to the existing lib.php

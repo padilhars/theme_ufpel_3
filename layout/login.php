@@ -37,22 +37,41 @@ $templatecontext = [
     'bodyattributes' => $OUTPUT->body_attributes(['class' => 'pagelayout-login']),
 ];
 
-// Add logo URL if available
+// Add logo URL if available - Fixed to prevent URL duplication
 if (method_exists($renderer, 'get_logo_url')) {
     $logourl = $renderer->get_logo_url();
     if ($logourl) {
-        $templatecontext['logourl'] = $logourl->out(false);
+        // Convert to string properly
+        if ($logourl instanceof moodle_url) {
+            $templatecontext['logourl'] = $logourl->out(false);
+        } else {
+            // It's already a string or can be cast to string
+            $logourlstr = (string)$logourl;
+            // Check if it's already an absolute URL to avoid duplication
+            if (preg_match('#^(https?:)?//#', $logourlstr)) {
+                $templatecontext['logourl'] = $logourlstr;
+            } else {
+                // It's a relative URL, make it absolute
+                $templatecontext['logourl'] = (new moodle_url($logourlstr))->out(false);
+            }
+        }
     }
 }
 
-// Add background image if configured
+// Add background image if configured - Fixed to prevent URL duplication
 $loginbgimg = $PAGE->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
 if (!empty($loginbgimg)) {
     // Ensure it's a string URL
-    if (is_object($loginbgimg) && method_exists($loginbgimg, 'out')) {
+    if ($loginbgimg instanceof moodle_url) {
         $templatecontext['loginbackgroundimage'] = $loginbgimg->out(false);
     } else {
-        $templatecontext['loginbackgroundimage'] = (string)$loginbgimg;
+        // Convert to string and check format
+        $bgimgstr = (string)$loginbgimg;
+        if (preg_match('#^(https?:)?//#', $bgimgstr)) {
+            $templatecontext['loginbackgroundimage'] = $bgimgstr;
+        } else {
+            $templatecontext['loginbackgroundimage'] = (new moodle_url($bgimgstr))->out(false);
+        }
     }
     $templatecontext['hasloginbackgroundimage'] = true;
 } else {
