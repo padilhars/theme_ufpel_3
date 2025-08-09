@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme UFPel upgrade script - Updated for Moodle 5.x with hooks migration.
+ * Theme UFPel upgrade script - Fixed version without function redeclaration.
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -37,13 +37,14 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
     
     // Version 2025072901 - Migrate brandcolor to primarycolor
     if ($oldversion < 2025072901) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Migrating brand color to primary color');
+        // Log message using mtrace (standard Moodle way)
+        mtrace('theme_ufpel: Migrating brand color to primary color');
         
         // Migrate brandcolor setting to primarycolor if it exists
         $brandcolor = get_config('theme_ufpel', 'brandcolor');
         if ($brandcolor !== false && get_config('theme_ufpel', 'primarycolor') === false) {
             set_config('primarycolor', $brandcolor, 'theme_ufpel');
-            upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Brand color migrated to primary color: ' . $brandcolor);
+            mtrace('theme_ufpel: Brand color migrated to primary color: ' . $brandcolor);
         }
         
         // Set default values for new color settings if not already set
@@ -57,7 +58,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         foreach ($colorsettings as $setting => $default) {
             if (get_config('theme_ufpel', $setting) === false) {
                 set_config($setting, $default, 'theme_ufpel');
-                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', "Set default {$setting}: {$default}");
+                mtrace("theme_ufpel: Set default {$setting}: {$default}");
             }
         }
         
@@ -69,7 +70,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
     
     // Version 2025080100 - Migrate to Bootstrap 5 classes
     if ($oldversion < 2025080100) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Migrating to Bootstrap 5');
+        mtrace('theme_ufpel: Migrating to Bootstrap 5');
         
         // Update any stored HTML content with old Bootstrap classes
         // This would typically update content in settings that contain HTML
@@ -110,7 +111,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
                 }
                 
                 set_config($setting, $content, 'theme_ufpel');
-                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', "Updated Bootstrap classes in {$setting}");
+                mtrace("theme_ufpel: Updated Bootstrap classes in {$setting}");
             }
         }
         
@@ -122,7 +123,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
     
     // Version 2025090100 - Add new features for Moodle 5.x
     if ($oldversion < 2025090100) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Adding Moodle 5.x features');
+        mtrace('theme_ufpel: Adding Moodle 5.x features');
         
         // Add new settings for Moodle 5.x features
         $newsettings = [
@@ -138,20 +139,26 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         foreach ($newsettings as $setting => $default) {
             if (get_config('theme_ufpel', $setting) === false) {
                 set_config($setting, $default, 'theme_ufpel');
-                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', "Added setting {$setting}: {$default}");
+                mtrace("theme_ufpel: Added setting {$setting}: {$default}");
             }
         }
         
-        // Purge caches with new definitions
-        cache_helper::purge_by_definition('theme_ufpel', 'courseteachers');
-        cache_helper::purge_by_definition('theme_ufpel', 'themesettings');
+        // Purge caches with new definitions - with error handling
+        try {
+            if (class_exists('cache_helper')) {
+                cache_helper::purge_by_definition('theme_ufpel', 'courseteachers');
+                cache_helper::purge_by_definition('theme_ufpel', 'themesettings');
+            }
+        } catch (Exception $e) {
+            mtrace('theme_ufpel: Cache definitions not found (will be created on first use)');
+        }
         
         upgrade_plugin_savepoint(true, 2025090100, 'theme', 'ufpel');
     }
     
     // Version 2025100100 - Performance optimizations
     if ($oldversion < 2025100100) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Applying performance optimizations');
+        mtrace('theme_ufpel: Applying performance optimizations');
         
         // Enable CSS optimization by default
         if (get_config('theme_ufpel', 'enablecssoptimization') === false) {
@@ -175,7 +182,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
     
     // Version 2025110100 - Clean up deprecated settings
     if ($oldversion < 2025110100) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Cleaning up deprecated settings');
+        mtrace('theme_ufpel: Cleaning up deprecated settings');
         
         // Remove deprecated settings
         $deprecated = [
@@ -186,7 +193,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         foreach ($deprecated as $setting) {
             if (get_config('theme_ufpel', $setting) !== false) {
                 unset_config($setting, 'theme_ufpel');
-                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', "Removed deprecated setting: {$setting}");
+                mtrace("theme_ufpel: Removed deprecated setting: {$setting}");
             }
         }
         
@@ -198,7 +205,7 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
     
     // Version 2025120100 - Migrate to new hooks system
     if ($oldversion < 2025120100) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Migrating to new hooks system');
+        mtrace('theme_ufpel: Migrating to new hooks system');
         
         // Clear all caches to ensure new hooks are registered
         cache_helper::purge_all();
@@ -207,14 +214,14 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         // The actual migration is handled by the new files
         // Old callbacks will still work but show deprecation notices
         
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Hooks system migration completed');
+        mtrace('theme_ufpel: Hooks system migration completed');
         
         upgrade_plugin_savepoint(true, 2025120100, 'theme', 'ufpel');
     }
     
     // Version 2025120102 - Remove deprecated callbacks completely
     if ($oldversion < 2025120102) {
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Removing deprecated callback functions');
+        mtrace('theme_ufpel: Removing deprecated callback functions');
         
         // Clear all caches to ensure the new system is used
         purge_all_caches();
@@ -224,8 +231,20 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         if (is_dir($cachedir)) {
             $ufpeldir = $cachedir . '/-1/ufpel';
             if (is_dir($ufpeldir)) {
-                remove_dir($ufpeldir, true);
-                upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Cleared compiled mustache templates');
+                // Use Moodle's remove_dir function if available
+                if (function_exists('remove_dir')) {
+                    remove_dir($ufpeldir, true);
+                } else {
+                    // Fallback to manual deletion
+                    $files = glob($ufpeldir . '/*');
+                    foreach ($files as $file) {
+                        if (is_file($file)) {
+                            unlink($file);
+                        }
+                    }
+                    @rmdir($ufpeldir);
+                }
+                mtrace('theme_ufpel: Cleared compiled mustache templates');
             }
         }
         
@@ -235,29 +254,46 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         // Note: The deprecated functions have been removed from lib.php
         // The new hooks system in classes/hooks/output_callbacks.php handles all functionality
         
-        upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Deprecated callbacks removed, using hooks system exclusively');
+        mtrace('theme_ufpel: Deprecated callbacks removed, using hooks system exclusively');
         
         upgrade_plugin_savepoint(true, 2025120102, 'theme', 'ufpel');
+    }
+    
+    // Version 2025120103 - Fix string references and renderer issues
+    if ($oldversion < 2025120103) {
+        mtrace('theme_ufpel: Fixing string references and renderer issues');
+        
+        // Clear all caches
+        theme_reset_all_caches();
+        purge_all_caches();
+        
+        // Ensure required settings are configured
+        $requiredSettings = [
+            'primarycolor' => '#003366',
+            'secondarycolor' => '#0066cc',
+            'backgroundcolor' => '#ffffff',
+            'highlightcolor' => '#ffc107',
+            'contenttextcolor' => '#212529',
+            'highlighttextcolor' => '#ffffff'
+        ];
+        
+        foreach ($requiredSettings as $setting => $default) {
+            if (get_config('theme_ufpel', $setting) === false) {
+                set_config($setting, $default, 'theme_ufpel');
+                mtrace("theme_ufpel: Set required setting {$setting}: {$default}");
+            }
+        }
+        
+        mtrace('theme_ufpel: String references and renderer issues fixed');
+        
+        upgrade_plugin_savepoint(true, 2025120103, 'theme', 'ufpel');
     }
     
     // Always clear theme caches at the end of upgrade
     theme_reset_all_caches();
     
     // Log successful upgrade
-    upgrade_log(UPGRADE_LOG_NORMAL, 'theme_ufpel', 'Theme UFPel upgrade completed successfully');
+    mtrace('theme_ufpel: Theme UFPel upgrade completed successfully');
     
     return true;
-}
-
-/**
- * Helper function to log upgrade messages.
- *
- * @param int $level Log level
- * @param string $component Component name
- * @param string $message Log message
- */
-function upgrade_log($level, $component, $message) {
-    if (defined('UPGRADE_LOG_NORMAL')) {
-        mtrace("{$component}: {$message}");
-    }
 }

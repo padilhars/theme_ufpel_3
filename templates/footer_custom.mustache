@@ -17,7 +17,7 @@
 {{!
     @template theme_ufpel/footer_custom
 
-    Custom footer template for UFPel theme - Using only existing Moodle strings
+    Custom footer template for UFPel theme - Fixed with correct string references
 }}
 <footer id="ufpel-footer" class="ufpel-footer" role="contentinfo">
     {{#hasfootercontent}}
@@ -64,7 +64,7 @@
                             <li>
                                 <a href="{{homeurl}}">
                                     <i class="fa fa-home" aria-hidden="true"></i>
-                                    {{#str}}home, core{{/str}}
+                                    {{#str}}home{{/str}}
                                 </a>
                             </li>
                             <li>
@@ -108,7 +108,7 @@
                             <li>
                                 <a href="https://docs.moodle.org" target="_blank" rel="noopener">
                                     <i class="fa fa-book" aria-hidden="true"></i>
-                                    {{#str}}documentation{{/str}}
+                                    {{#str}}documentation, theme_ufpel{{/str}}
                                 </a>
                             </li>
                             {{#loginurl}}
@@ -130,7 +130,7 @@
                             <li>
                                 <a href="{{privacyurl}}">
                                     <i class="fa fa-shield" aria-hidden="true"></i>
-                                    {{#str}}privacy{{/str}}
+                                    {{#str}}privacypolicy, theme_ufpel{{/str}}
                                 </a>
                             </li>
                             <li>

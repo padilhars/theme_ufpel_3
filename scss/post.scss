@@ -30,6 +30,12 @@
 @import "utilities/functions";
 
 // ============================================================================
+// Import Components
+// ============================================================================
+
+@import "components/login";
+
+// ============================================================================
 // CSS Custom Properties (CSS Variables)
 // ============================================================================
 
@@ -166,11 +172,6 @@ a {
             }
         }
     }
-    
-    // Bootstrap 5 utilities
-    .ms-auto {
-        margin-left: auto !important;
-    }
 }
 
 // ============================================================================
@@ -190,11 +191,11 @@ a {
         background-position: center;
         background-repeat: no-repeat;
         
-        @include media-breakpoint-down(md) {
+        @media (max-width: 768px) {
             min-height: 200px;
         }
         
-        @include media-breakpoint-down(sm) {
+        @media (max-width: 576px) {
             min-height: 150px;
             border-radius: var(--ufpel-radius-md);
         }
@@ -243,123 +244,12 @@ a {
             flex-direction: column;
             justify-content: flex-end;
             
-            @include media-breakpoint-down(md) {
+            @media (max-width: 768px) {
                 padding: var(--ufpel-spacing-lg);
             }
             
-            @include media-breakpoint-down(sm) {
+            @media (max-width: 576px) {
                 padding: var(--ufpel-spacing-md);
-            }
-            
-            .ufpel-course-breadcrumb {
-                .breadcrumb {
-                    background: transparent;
-                    padding: 0;
-                    margin-bottom: var(--ufpel-spacing-sm);
-                    
-                    .breadcrumb-item {
-                        color: rgba(255, 255, 255, 0.8);
-                        
-                        a {
-                            color: rgba(255, 255, 255, 0.9);
-                            
-                            &:hover {
-                                color: white;
-                            }
-                        }
-                        
-                        &.active {
-                            color: white;
-                        }
-                    }
-                }
-            }
-            
-            .ufpel-course-title {
-                color: white;
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-bottom: var(--ufpel-spacing-sm);
-                line-height: 1.2;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                
-                @include media-breakpoint-down(md) {
-                    font-size: 2rem;
-                }
-                
-                @include media-breakpoint-down(sm) {
-                    font-size: 1.5rem;
-                }
-            }
-            
-            .ufpel-course-teachers {
-                color: rgba(255, 255, 255, 0.95);
-                font-size: 1.1rem;
-                margin-bottom: var(--ufpel-spacing-sm);
-                
-                .teacher-label {
-                    font-weight: 600;
-                }
-                
-                @include media-breakpoint-down(sm) {
-                    font-size: 1rem;
-                }
-            }
-            
-            .ufpel-course-summary {
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 0.95rem;
-                margin-bottom: var(--ufpel-spacing-md);
-                max-width: 800px;
-                
-                @include media-breakpoint-down(sm) {
-                    font-size: 0.9rem;
-                }
-            }
-            
-            .ufpel-course-meta {
-                display: flex;
-                flex-wrap: wrap;
-                gap: var(--ufpel-spacing-md);
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 0.9rem;
-                
-                .meta-item {
-                    display: flex;
-                    align-items: center;
-                    gap: var(--ufpel-spacing-xs);
-                    
-                    i {
-                        font-size: 1rem;
-                    }
-                }
-                
-                @include media-breakpoint-down(sm) {
-                    font-size: 0.85rem;
-                    gap: var(--ufpel-spacing-sm);
-                }
-            }
-            
-            .ufpel-course-progress {
-                margin-top: var(--ufpel-spacing-md);
-                
-                .progress-label {
-                    color: rgba(255, 255, 255, 0.95);
-                    font-size: 0.9rem;
-                    margin-bottom: var(--ufpel-spacing-xs);
-                }
-                
-                .progress {
-                    height: 8px;
-                    background-color: rgba(255, 255, 255, 0.2);
-                    border-radius: var(--ufpel-radius-sm);
-                    overflow: hidden;
-                    
-                    .progress-bar {
-                        background-color: var(--ufpel-highlight);
-                        transition: width var(--ufpel-transition-speed) var(--ufpel-transition-timing);
-                    }
-                }
             }
         }
     }
@@ -437,17 +327,6 @@ a {
             color: white;
         }
     }
-    
-    &.btn-outline-primary {
-        color: var(--ufpel-primary);
-        border-color: var(--ufpel-primary);
-        
-        &:hover:not(:disabled) {
-            background-color: var(--ufpel-primary);
-            border-color: var(--ufpel-primary);
-            color: var(--ufpel-text-highlight);
-        }
-    }
 }
 
 // ============================================================================
@@ -457,7 +336,7 @@ a {
 .form-control,
 .form-select {
     border-radius: var(--ufpel-radius-sm);
-    border-color: var(--bs-gray-400);
+    border-color: #ced4da;
     transition: border-color var(--ufpel-transition-speed) var(--ufpel-transition-timing),
                 box-shadow var(--ufpel-transition-speed) var(--ufpel-transition-timing);
     
@@ -473,34 +352,11 @@ a {
 }
 
 // ============================================================================
-// Activity Items
-// ============================================================================
-
-.activity-item {
-    .activity-basis {
-        transition: background-color var(--ufpel-transition-speed) var(--ufpel-transition-timing),
-                    transform var(--ufpel-transition-speed) var(--ufpel-transition-timing);
-        
-        &:hover {
-            background-color: rgba(var(--ufpel-secondary-rgb), 0.05);
-            transform: translateX(2px);
-        }
-    }
-    
-    .activity-icon {
-        transition: transform var(--ufpel-transition-speed) var(--ufpel-transition-timing);
-        
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
-}
-
-// ============================================================================
 // Footer
 // ============================================================================
 
-#page-footer {
+#page-footer,
+.ufpel-footer {
     background-color: var(--ufpel-primary);
     color: var(--ufpel-text-highlight);
     padding: var(--ufpel-spacing-xl) 0;
@@ -563,16 +419,42 @@ a {
 
 // Updated screen reader only class for Bootstrap 5
 .visually-hidden {
-    @include visually-hidden();
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }
 
-.visually-hidden-focusable {
-    @include visually-hidden-focusable();
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }
 
 // Skip links
 .skip-main {
-    @include visually-hidden-focusable();
+    &:not(:focus):not(:focus-within) {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0,0,0,0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+    }
     
     &:focus {
         position: fixed;
@@ -617,35 +499,6 @@ a {
 }
 
 // ============================================================================
-// Responsive Utilities
-// ============================================================================
-
-// Mobile specific styles
-.ufpel-mobile {
-    .ufpel-course-header {
-        min-height: 150px;
-    }
-    
-    .navbar-brand {
-        font-size: 1.25rem;
-    }
-}
-
-// Tablet specific styles
-.ufpel-tablet {
-    .ufpel-course-header {
-        min-height: 200px;
-    }
-}
-
-// Desktop specific styles
-.ufpel-desktop {
-    .container-fluid {
-        max-width: 1400px;
-    }
-}
-
-// ============================================================================
 // Print Styles
 // ============================================================================
 
@@ -653,34 +506,11 @@ a {
     .navbar,
     .drawer,
     #page-footer,
+    .ufpel-footer,
     .ufpel-scroll-top,
     .ufpel-course-header-background,
     .activity-navigation,
     .secondary-navigation {
         display: none !important;
-    }
-    
-    .ufpel-course-header {
-        min-height: auto;
-        padding: var(--ufpel-spacing-md);
-        background: none;
-        border: 1px solid #000;
-        
-        .ufpel-course-header-content {
-            position: static;
-            padding: 0;
-            
-            * {
-                color: #000 !important;
-                text-shadow: none !important;
-            }
-        }
-    }
-    
-    #region-main {
-        width: 100% !important;
-        max-width: none !important;
-        margin: 0 !important;
-        box-shadow: none !important;
     }
 }

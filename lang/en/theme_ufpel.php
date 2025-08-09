@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language file for theme_ufpel - English (Complete with all required strings)
+ * Language file for theme_ufpel - English (Complete with ALL required strings)
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -33,13 +33,27 @@ $string['configtitle'] = 'UFPel theme settings';
 $string['generalsettings'] = 'General settings';
 $string['advancedsettings'] = 'Advanced settings';
 $string['features'] = 'Features';
+$string['performance'] = 'Performance';
+$string['accessibility'] = 'Accessibility';
 $string['default'] = 'Default';
+
+// Settings headings - MISSING STRINGS ADDED
+$string['colorsheading'] = 'Color Settings';
+$string['colorsheading_desc'] = 'Configure the color scheme for your theme. These colors will be applied throughout the site.';
+$string['logoheading'] = 'Logo and Branding';
+$string['logoheading_desc'] = 'Upload your institution logo and configure branding elements.';
+$string['loginheading'] = 'Login Page Settings';
+$string['loginheading_desc'] = 'Customize the appearance of the login page.';
+$string['cssheading'] = 'Custom CSS/SCSS';
+$string['cssheading_desc'] = 'Add custom CSS or SCSS code to further customize the theme appearance.';
 
 // Color settings
 $string['primarycolor'] = 'Primary color';
 $string['primarycolor_desc'] = 'The primary color for the theme. This will be used for main elements like the header and buttons.';
 $string['secondarycolor'] = 'Secondary color';
 $string['secondarycolor_desc'] = 'The secondary color for the theme. Used for links and secondary elements.';
+$string['accentcolor'] = 'Accent color';
+$string['accentcolor_desc'] = 'The accent color used for highlights and special elements throughout the site.';
 $string['backgroundcolor'] = 'Background color';
 $string['backgroundcolor_desc'] = 'The main background color for the site pages.';
 $string['highlightcolor'] = 'Highlight color';
@@ -48,6 +62,10 @@ $string['contenttextcolor'] = 'Content text color';
 $string['contenttextcolor_desc'] = 'The color for general text content throughout the site.';
 $string['highlighttextcolor'] = 'Highlight text color';
 $string['highlighttextcolor_desc'] = 'The color for text that appears on primary colored backgrounds.';
+
+// Legacy color settings (for compatibility)
+$string['brandcolor'] = 'Brand color';
+$string['brandcolor_desc'] = 'The main brand color (legacy setting - use Primary color instead).';
 
 // Feature settings
 $string['showcourseimage'] = 'Show course image';
@@ -61,19 +79,21 @@ $string['footercontent_desc'] = 'Custom HTML content to display in the site foot
 
 // Logo and images
 $string['logo'] = 'Logo';
-$string['logo_desc'] = 'Upload your institution logo. This will replace the site name in the navigation bar.';
+$string['logo_desc'] = 'Upload your institution logo. This will replace the site name in the navigation bar. Recommended height: 40px.';
+$string['footerlogo'] = 'Footer logo';
+$string['footerlogo_desc'] = 'A separate logo for the footer area. If not set, the main logo will be used.';
 $string['loginbackgroundimage'] = 'Login page background image';
-$string['loginbackgroundimage_desc'] = 'An image that will be displayed as the background of the login page.';
+$string['loginbackgroundimage_desc'] = 'An image that will be displayed as the background of the login page. Recommended size: 1920x1080 or larger.';
 $string['favicon'] = 'Favicon';
 $string['favicon_desc'] = 'Upload a custom favicon. Should be an .ico, .png or .svg file.';
 
 // Custom CSS/SCSS
 $string['customcss'] = 'Custom CSS';
-$string['customcss_desc'] = 'Whatever CSS rules you add to this textarea will be reflected in every page.';
+$string['customcss_desc'] = 'Whatever CSS rules you add to this textarea will be reflected in every page, making it easier to customize this theme.';
 $string['rawscss'] = 'Raw SCSS';
 $string['rawscss_desc'] = 'Use this field to provide SCSS code which will be injected at the end of the stylesheet.';
 $string['rawscsspre'] = 'Raw initial SCSS';
-$string['rawscsspre_desc'] = 'In this field you can provide initializing SCSS code, it will be injected before everything else.';
+$string['rawscsspre_desc'] = 'In this field you can provide initializing SCSS code, it will be injected before everything else. Most of the time you will use this setting to define variables.';
 
 // Preset settings
 $string['preset'] = 'Theme preset';
@@ -81,13 +101,13 @@ $string['preset_desc'] = 'Pick a preset to broadly change the look of the theme.
 $string['preset_default'] = 'Default';
 $string['preset_dark'] = 'Dark mode';
 $string['presetfiles'] = 'Additional theme preset files';
-$string['presetfiles_desc'] = 'Preset files can be used to dramatically alter the appearance of the theme.';
+$string['presetfiles_desc'] = 'Preset files can be used to dramatically alter the appearance of the theme. See <a href="https://docs.moodle.org/dev/Boost_Presets">Boost Presets</a> for information on creating and sharing your own preset files.';
 
 // Font settings
 $string['customfonts'] = 'Custom fonts URL';
-$string['customfonts_desc'] = 'Enter URL to import custom fonts (e.g., Google Fonts).';
+$string['customfonts_desc'] = 'Enter URL to import custom fonts (e.g., Google Fonts). Use the complete @import statement.';
 
-// Footer strings - Essential for the footer template
+// Footer strings - REQUIRED for footer template
 $string['footerdescription'] = 'Learning management system of the Federal University of Pelotas';
 $string['quicklinks'] = 'Quick links';
 $string['support'] = 'Support';
@@ -99,7 +119,7 @@ $string['allrightsreserved'] = 'All rights reserved';
 $string['poweredby'] = 'Powered by';
 $string['theme'] = 'Theme';
 
-// Navigation strings
+// Navigation strings - REQUIRED for navigation
 $string['home'] = 'Home';
 $string['courses'] = 'Courses';
 $string['myhome'] = 'Dashboard';
@@ -107,9 +127,23 @@ $string['calendar'] = 'Calendar';
 $string['help'] = 'Help';
 $string['documentation'] = 'Documentation';
 $string['login'] = 'Log in';
+$string['logout'] = 'Log out';
 $string['privacy'] = 'Privacy';
 $string['privacypolicy'] = 'Privacy policy';
 $string['dataprivacy'] = 'Data privacy';
+
+// Login page strings
+$string['username'] = 'Username';
+$string['password'] = 'Password';
+$string['rememberusername'] = 'Remember username';
+$string['loginsite'] = 'Log in to the site';
+$string['startsignup'] = 'Create new account';
+$string['forgotten'] = 'Forgotten your username or password?';
+$string['firsttime'] = 'Is this your first time here?';
+$string['newaccount'] = 'Create a new account';
+$string['loginguest'] = 'Log in as a guest';
+$string['someallowguest'] = 'Some courses may allow guest access';
+$string['forgotaccount'] = 'Lost password?';
 
 // Course page strings
 $string['teacher'] = 'Teacher';
@@ -123,6 +157,8 @@ $string['progress'] = 'Progress';
 $string['complete'] = 'complete';
 $string['courseheader'] = 'Course header';
 $string['breadcrumb'] = 'Breadcrumb navigation';
+$string['courseprogress'] = 'Course progress';
+$string['coursecompletion'] = 'Course completion';
 
 // User interface strings
 $string['darkmodeon'] = 'Dark mode enabled';
@@ -130,6 +166,11 @@ $string['darkmodeoff'] = 'Dark mode disabled';
 $string['totop'] = 'Back to top';
 $string['skipmain'] = 'Skip to main content';
 $string['skipnav'] = 'Skip navigation';
+$string['skipnavigation'] = 'Skip navigation';
+$string['skipmainmenu'] = 'Skip main menu';
+$string['skipmaincontent'] = 'Skip to main content';
+$string['skipsettingsmenu'] = 'Skip settings menu';
+$string['skipfooter'] = 'Skip to footer';
 $string['themepreferences'] = 'Theme preferences';
 
 // Privacy strings
@@ -179,9 +220,9 @@ $string['enablecssoptimization_desc'] = 'Enable CSS optimization and minificatio
 $string['enableresourcehints'] = 'Enable resource hints';
 $string['enableresourcehints_desc'] = 'Use preload and prefetch to improve resource loading.';
 $string['enableanimations'] = 'Enable animations';
-$string['enableanimations_desc'] = 'Enable smooth animations and transitions.';
+$string['enableanimations_desc'] = 'Enable smooth animations and transitions. Disable for better performance on slower devices.';
 $string['enableaccessibilitytools'] = 'Accessibility tools';
-$string['enableaccessibilitytools_desc'] = 'Enable additional accessibility tools.';
+$string['enableaccessibilitytools_desc'] = 'Enable additional accessibility tools like contrast adjustment and font size controls.';
 $string['enabledarkmode'] = 'Enable dark mode';
 $string['enabledarkmode_desc'] = 'Allow users to switch to dark mode.';
 $string['enablecompactview'] = 'Enable compact view';
@@ -209,15 +250,73 @@ $string['competencies'] = 'Competencies';
 $string['grades'] = 'Grades';
 $string['messages'] = 'Messages';
 $string['preferences'] = 'Preferences';
-$string['logout'] = 'Log out';
 
 // Course display
 $string['coursecategories'] = 'Course categories';
+$string['coursecategory'] = 'Course category';
 $string['recentactivity'] = 'Recent activity';
 $string['nocoursesyet'] = 'No courses available yet';
 $string['viewallcourses'] = 'View all courses';
 $string['mycourses'] = 'My courses';
+$string['allcourses'] = 'All courses';
+$string['nocourses'] = 'No courses';
 $string['timeline'] = 'Timeline';
+$string['enrollmentkey'] = 'Enrollment key';
+$string['courseaccess'] = 'Course access';
+
+// User profile
+$string['userprofile'] = 'User profile';
+$string['editprofile'] = 'Edit profile';
+
+// Additional UI elements
+$string['edit'] = 'Edit';
+$string['delete'] = 'Delete';
+$string['save'] = 'Save';
+$string['cancel'] = 'Cancel';
+$string['submit'] = 'Submit';
+$string['view'] = 'View';
+$string['download'] = 'Download';
+$string['upload'] = 'Upload';
+$string['select'] = 'Select';
+$string['open'] = 'Open';
+$string['more'] = 'More';
+$string['less'] = 'Less';
+
+// Status messages
+$string['completed'] = 'Completed';
+$string['incomplete'] = 'Incomplete';
+$string['inprogress'] = 'In progress';
+$string['notstarted'] = 'Not started';
+$string['processing'] = 'Processing...';
+
+// Time related
+$string['today'] = 'Today';
+$string['yesterday'] = 'Yesterday';
+$string['tomorrow'] = 'Tomorrow';
+$string['lastweek'] = 'Last week';
+$string['nextweek'] = 'Next week';
+$string['lastmonth'] = 'Last month';
+$string['nextmonth'] = 'Next month';
+
+// Actions
+$string['browsecourses'] = 'Browse courses';
+$string['popularlinks'] = 'Popular links';
+$string['quickaccess'] = 'Quick access';
+$string['needhelp'] = 'Need help?';
+$string['contactsupport'] = 'Contact support';
+$string['welcomeback'] = 'Welcome back!';
+$string['logintitle'] = 'Log in to UFPel Moodle';
+$string['logindescription'] = 'Please enter your credentials to access the learning platform.';
+
+// Terms and conditions
+$string['termsofuse'] = 'Terms of use';
+$string['datasecurity'] = 'Data security';
+$string['copyright'] = 'Copyright';
+$string['siteadmin'] = 'Site administration';
+$string['sitemenu'] = 'Site menu';
+$string['navigationmenu'] = 'Navigation menu';
+$string['usermenu'] = 'User menu';
+$string['languagemenu'] = 'Language menu';
 
 // Development and debugging
 $string['version'] = 'Version';
@@ -227,3 +326,20 @@ $string['website'] = 'Website';
 $string['repository'] = 'Repository';
 $string['issuetracker'] = 'Issue tracker';
 $string['documentation_link'] = 'Documentation link';
+
+// Error messages
+$string['error:missinglogo'] = 'Logo not found';
+$string['error:invalidcolor'] = 'Invalid color code';
+$string['error:fileuploadfailed'] = 'File upload failed';
+
+// Help strings
+$string['help:primarycolor'] = 'This color will be applied to the main interface elements';
+$string['help:darkmode'] = 'Dark mode reduces eye strain in low-light environments';
+$string['help:lazyloading'] = 'Lazy loading significantly improves performance on pages with many images';
+
+// Administrative strings
+$string['themesettings'] = 'UFPel theme settings';
+$string['resetsettings'] = 'Reset settings';
+$string['resetsettings_desc'] = 'Reset all theme settings to default values';
+$string['settingssaved'] = 'Settings saved successfully';
+$string['settingsreset'] = 'Settings reset to default values';

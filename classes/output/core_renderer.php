@@ -66,17 +66,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @param int|null $maxwidth The maximum width, or null when the maximum width does not matter.
      * @param int $maxheight The maximum height, or null when the maximum height does not matter.
-     * @return string|null The logo URL or null if not set.
+     * @return moodle_url|null The logo URL or null if not set.
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
         // Check if we have a custom logo from theme settings
         $logo = $this->page->theme->setting_file_url('logo', 'logo');
         if (!empty($logo)) {
-            // Convert to string if it's a moodle_url object
-            if (is_object($logo) && method_exists($logo, 'out')) {
-                return $logo->out(false);
+            // Return as moodle_url object to match expected type
+            if (!($logo instanceof moodle_url)) {
+                $logo = new moodle_url($logo);
             }
-            return (string)$logo;
+            return $logo;
         }
         
         // Fall back to parent implementation if no custom logo
@@ -92,7 +92,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $logourl = $this->get_logo_url(null, 40);
         
         $templatecontext = [
-            'logourl' => $logourl,
+            'logourl' => $logourl ? $logourl->out(false) : null,
             'sitename' => format_string($this->page->course->shortname, true, 
                 ['context' => context_course::instance($this->page->course->id)]),
             'homeurl' => (new moodle_url('/'))->out(false)
@@ -245,42 +245,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
     
     /**
-     * Returns HTML for the login page background.
-     *
-     * @return string HTML to display the login background.
-     */
-    public function login_background() {
-        if ($this->page->pagelayout !== 'login') {
-            return '';
-        }
-        
-        $loginbgimg = $this->page->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
-        if (empty($loginbgimg)) {
-            return '';
-        }
-        
-        // Get URL as string safely
-        $url = '';
-        if (is_string($loginbgimg)) {
-            $url = $loginbgimg;
-        } else if (is_object($loginbgimg) && method_exists($loginbgimg, 'out')) {
-            $url = $loginbgimg->out(false);
-        }
-        
-        if (empty($url)) {
-            return '';
-        }
-        
-        // Use template for rendering
-        $templatecontext = [
-            'backgroundurl' => $url,
-            'backgroundalt' => get_string('loginbackgroundimage', 'theme_ufpel')
-        ];
-        
-        return $this->render_from_template('theme_ufpel/login_background', $templatecontext);
-    }
-    
-    /**
      * Returns the HTML for the footer.
      *
      * @return string HTML footer
@@ -329,7 +293,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         
         // Fall back to main logo
-        return $this->get_logo_url();
+        $mainlogo = $this->get_logo_url();
+        if ($mainlogo) {
+            return $mainlogo->out(false);
+        }
+        return null;
     }
     
     /**
@@ -386,5 +354,44 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         
         return $usermenu;
+    }
+    
+    /**
+     * Override login template context to include background image
+     * 
+     * @param array|\stdClass $templatecontext The template context
+     * @return array|\stdClass Modified template context
+     */
+    public function login_templatecontext($templatecontext = null) {
+        // Get parent context first
+        if (method_exists(get_parent_class($this), 'login_templatecontext')) {
+            $templatecontext = parent::login_templatecontext($templatecontext);
+        } else {
+            // Initialize if parent doesn't have this method
+            if (!$templatecontext) {
+                $templatecontext = new stdClass();
+            }
+        }
+        
+        // Convert to object if array
+        if (is_array($templatecontext)) {
+            $templatecontext = (object) $templatecontext;
+        }
+        
+        // Add login background image URL if available
+        $loginbgimg = $this->page->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
+        if (!empty($loginbgimg)) {
+            // Ensure it's a proper URL string
+            if (is_object($loginbgimg) && method_exists($loginbgimg, 'out')) {
+                $templatecontext->loginbackgroundimage = $loginbgimg->out(false);
+            } else {
+                $templatecontext->loginbackgroundimage = (string)$loginbgimg;
+            }
+            $templatecontext->hasloginbackgroundimage = true;
+        } else {
+            $templatecontext->hasloginbackgroundimage = false;
+        }
+        
+        return $templatecontext;
     }
 }
