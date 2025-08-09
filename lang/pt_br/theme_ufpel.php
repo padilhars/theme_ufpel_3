@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Arquivo de idioma para theme_ufpel - Português Brasil
+ * Arquivo de idioma para theme_ufpel - Português Brasil (Completo)
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -37,309 +37,301 @@ $string['performance'] = 'Desempenho';
 $string['accessibility'] = 'Acessibilidade';
 $string['default'] = 'Padrão';
 
-// Settings headings - MISSING STRINGS ADDED
+// Settings headings
 $string['colorsheading'] = 'Configurações de cores';
 $string['colorsheading_desc'] = 'Configure o esquema de cores para o seu tema. Essas cores serão aplicadas em todo o site.';
 $string['logoheading'] = 'Logo e identidade visual';
 $string['logoheading_desc'] = 'Envie o logotipo da sua instituição e configure os elementos de identidade visual.';
 $string['loginheading'] = 'Configurações da página de login';
-$string['loginheading_desc'] = 'Customize the appearance of the login page.';
-$string['cssheading'] = 'Custom CSS/SCSS';
-$string['cssheading_desc'] = 'Add custom CSS or SCSS code to further customize the theme appearance.';
+$string['loginheading_desc'] = 'Personalize a aparência da página de login.';
+$string['cssheading'] = 'CSS/SCSS personalizado';
+$string['cssheading_desc'] = 'Adicione código CSS ou SCSS personalizado para personalizar ainda mais a aparência do tema.';
 
 // Color settings
-$string['primarycolor'] = 'Primary color';
-$string['primarycolor_desc'] = 'The primary color for the theme. This will be used for main elements like the header and buttons.';
-$string['secondarycolor'] = 'Secondary color';
-$string['secondarycolor_desc'] = 'The secondary color for the theme. Used for links and secondary elements.';
-$string['accentcolor'] = 'Accent color';
-$string['accentcolor_desc'] = 'The accent color used for highlights and special elements throughout the site.';
-$string['backgroundcolor'] = 'Background color';
-$string['backgroundcolor_desc'] = 'The main background color for the site pages.';
-$string['highlightcolor'] = 'Highlight color';
-$string['highlightcolor_desc'] = 'The color used for highlighting important elements and accents.';
-$string['contenttextcolor'] = 'Content text color';
-$string['contenttextcolor_desc'] = 'The color for general text content throughout the site.';
-$string['highlighttextcolor'] = 'Highlight text color';
-$string['highlighttextcolor_desc'] = 'The color for text that appears on primary colored backgrounds.';
+$string['primarycolor'] = 'Cor primária';
+$string['primarycolor_desc'] = 'A cor primária do tema. Será usada em elementos principais como cabeçalho e botões.';
+$string['secondarycolor'] = 'Cor secundária';
+$string['secondarycolor_desc'] = 'A cor secundária do tema. Usada para links e elementos secundários.';
+$string['accentcolor'] = 'Cor de destaque';
+$string['accentcolor_desc'] = 'A cor de destaque usada para realces e elementos especiais em todo o site.';
+$string['backgroundcolor'] = 'Cor de fundo';
+$string['backgroundcolor_desc'] = 'A cor de fundo principal para as páginas do site.';
+$string['highlightcolor'] = 'Cor de realce';
+$string['highlightcolor_desc'] = 'A cor usada para destacar elementos importantes e acentos.';
+$string['contenttextcolor'] = 'Cor do texto do conteúdo';
+$string['contenttextcolor_desc'] = 'A cor do texto geral do conteúdo em todo o site.';
+$string['highlighttextcolor'] = 'Cor do texto destacado';
+$string['highlighttextcolor_desc'] = 'A cor do texto que aparece em fundos coloridos primários.';
 
 // Legacy color settings (for compatibility)
-$string['brandcolor'] = 'Brand color';
-$string['brandcolor_desc'] = 'The main brand color (legacy setting - use Primary color instead).';
+$string['brandcolor'] = 'Cor da marca';
+$string['brandcolor_desc'] = 'A cor principal da marca (configuração legada - use Cor primária em vez disso).';
 
 // Feature settings
-$string['showcourseimage'] = 'Show course image';
-$string['showcourseimage_desc'] = 'Display the course image in the header of course pages.';
-$string['showteachers'] = 'Show teachers';
-$string['showteachers_desc'] = 'Display teacher names in the header of course pages.';
-$string['courseheaderoverlay'] = 'Course header overlay';
-$string['courseheaderoverlay_desc'] = 'Add a dark overlay to the course header to improve text readability.';
-$string['footercontent'] = 'Footer content';
-$string['footercontent_desc'] = 'Custom HTML content to display in the site footer.';
+$string['showcourseimage'] = 'Mostrar imagem do curso';
+$string['showcourseimage_desc'] = 'Exibir a imagem do curso no cabeçalho das páginas do curso.';
+$string['showteachers'] = 'Mostrar professores';
+$string['showteachers_desc'] = 'Exibir nomes dos professores no cabeçalho das páginas do curso.';
+$string['courseheaderoverlay'] = 'Sobreposição do cabeçalho do curso';
+$string['courseheaderoverlay_desc'] = 'Adicionar uma sobreposição escura ao cabeçalho do curso para melhorar a legibilidade do texto.';
+$string['footercontent'] = 'Conteúdo do rodapé';
+$string['footercontent_desc'] = 'Conteúdo HTML personalizado para exibir no rodapé do site.';
 
 // Logo and images
 $string['logo'] = 'Logo';
-$string['logo_desc'] = 'Upload your institution logo. This will replace the site name in the navigation bar. Recommended height: 40px.';
-$string['footerlogo'] = 'Footer logo';
-$string['footerlogo_desc'] = 'A separate logo for the footer area. If not set, the main logo will be used.';
-$string['loginbackgroundimage'] = 'Login page background image';
-$string['loginbackgroundimage_desc'] = 'An image that will be displayed as the background of the login page. Recommended size: 1920x1080 or larger.';
+$string['logo_desc'] = 'Envie o logotipo da sua instituição. Isso substituirá o nome do site na barra de navegação. Altura recomendada: 40px.';
+$string['footerlogo'] = 'Logo do rodapé';
+$string['footerlogo_desc'] = 'Um logotipo separado para a área do rodapé. Se não definido, o logotipo principal será usado.';
+$string['loginbackgroundimage'] = 'Imagem de fundo da página de login';
+$string['loginbackgroundimage_desc'] = 'Uma imagem que será exibida como plano de fundo da página de login. Tamanho recomendado: 1920x1080 ou maior.';
 $string['favicon'] = 'Favicon';
-$string['favicon_desc'] = 'Upload a custom favicon. Should be an .ico, .png or .svg file.';
+$string['favicon_desc'] = 'Envie um favicon personalizado. Deve ser um arquivo .ico, .png ou .svg.';
 
 // Custom CSS/SCSS
-$string['customcss'] = 'Custom CSS';
-$string['customcss_desc'] = 'Whatever CSS rules you add to this textarea will be reflected in every page, making it easier to customize this theme.';
-$string['rawscss'] = 'Raw SCSS';
-$string['rawscss_desc'] = 'Use this field to provide SCSS code which will be injected at the end of the stylesheet.';
-$string['rawscsspre'] = 'Raw initial SCSS';
-$string['rawscsspre_desc'] = 'In this field you can provide initializing SCSS code, it will be injected before everything else. Most of the time you will use this setting to define variables.';
+$string['customcss'] = 'CSS personalizado';
+$string['customcss_desc'] = 'Quaisquer regras CSS que você adicionar a esta área de texto serão refletidas em todas as páginas, facilitando a personalização deste tema.';
+$string['rawscss'] = 'SCSS bruto';
+$string['rawscss_desc'] = 'Use este campo para fornecer código SCSS que será injetado no final da folha de estilo.';
+$string['rawscsspre'] = 'SCSS inicial bruto';
+$string['rawscsspre_desc'] = 'Neste campo você pode fornecer código SCSS de inicialização, ele será injetado antes de todo o resto. Na maioria das vezes você usará esta configuração para definir variáveis.';
 
 // Preset settings
-$string['preset'] = 'Theme preset';
-$string['preset_desc'] = 'Pick a preset to broadly change the look of the theme.';
+$string['preset'] = 'Predefinição do tema';
+$string['preset_desc'] = 'Escolha uma predefinição para alterar amplamente a aparência do tema.';
 $string['preset_default'] = 'Padrão';
-$string['preset_dark'] = 'Dark mode';
-$string['presetfiles'] = 'Additional theme preset files';
-$string['presetfiles_desc'] = 'Preset files can be used to dramatically alter the appearance of the theme. See <a href="https://docs.moodle.org/dev/Boost_Presets">Boost Presets</a> for information on creating and sharing your own preset files.';
+$string['preset_dark'] = 'Modo escuro';
+$string['presetfiles'] = 'Arquivos de predefinição de tema adicionais';
+$string['presetfiles_desc'] = 'Arquivos de predefinição podem ser usados para alterar drasticamente a aparência do tema.';
 
 // Font settings
-$string['customfonts'] = 'Custom fonts URL';
-$string['customfonts_desc'] = 'Enter URL to import custom fonts (e.g., Google Fonts). Use the complete @import statement.';
+$string['customfonts'] = 'URL de fontes personalizadas';
+$string['customfonts_desc'] = 'Insira a URL para importar fontes personalizadas (por exemplo, Google Fonts). Use a declaração @import completa.';
 
 // Footer strings - REQUIRED for footer template
-$string['footerdescription'] = 'Learning management system of the Federal University of Pelotas';
-$string['quicklinks'] = 'Quick links';
-$string['support'] = 'Support';
-$string['policies'] = 'Policies';
-$string['contactus'] = 'Contact us';
-$string['mobileapp'] = 'Mobile app';
-$string['downloadapp'] = 'Download the Moodle app';
-$string['allrightsreserved'] = 'All rights reserved';
-$string['poweredby'] = 'Powered by';
-$string['theme'] = 'Theme';
+$string['footerdescription'] = 'Sistema de gestão de aprendizagem da Universidade Federal de Pelotas';
+$string['quicklinks'] = 'Links rápidos';
+$string['support'] = 'Suporte';
+$string['policies'] = 'Políticas';
+$string['contactus'] = 'Fale conosco';
+$string['mobileapp'] = 'Aplicativo móvel';
+$string['downloadapp'] = 'Baixe o aplicativo Moodle';
+$string['allrightsreserved'] = 'Todos os direitos reservados';
+$string['poweredby'] = 'Desenvolvido com';
+$string['theme'] = 'Tema';
 
 // Navigation strings - REQUIRED for navigation
-$string['home'] = 'Home';
-$string['courses'] = 'Courses';
-$string['myhome'] = 'Dashboard';
-$string['calendar'] = 'Calendar';
-$string['help'] = 'Help';
-$string['documentation'] = 'Documentation';
-$string['login'] = 'Log in';
-$string['logout'] = 'Log out';
-$string['privacy'] = 'Privacy';
-$string['privacypolicy'] = 'Privacy policy';
-$string['dataprivacy'] = 'Data privacy';
+$string['home'] = 'Início';
+$string['courses'] = 'Cursos';
+$string['myhome'] = 'Painel';
+$string['calendar'] = 'Calendário';
+$string['help'] = 'Ajuda';
+$string['documentation'] = 'Documentação';
+$string['login'] = 'Entrar';
+$string['logout'] = 'Sair';
+$string['privacy'] = 'Privacidade';
+$string['privacypolicy'] = 'Política de privacidade';
+$string['dataprivacy'] = 'Privacidade de dados';
 
 // Login page strings
-$string['username'] = 'Username';
-$string['password'] = 'Password';
-$string['rememberusername'] = 'Remember username';
-$string['loginsite'] = 'Log in to the site';
-$string['startsignup'] = 'Create new account';
-$string['forgotten'] = 'Forgotten your username or password?';
-$string['firsttime'] = 'Is this your first time here?';
-$string['newaccount'] = 'Create a new account';
-$string['loginguest'] = 'Log in as a guest';
-$string['someallowguest'] = 'Some courses may allow guest access';
-$string['forgotaccount'] = 'Lost password?';
+$string['username'] = 'Nome de usuário';
+$string['password'] = 'Senha';
+$string['rememberusername'] = 'Lembrar nome de usuário';
+$string['loginsite'] = 'Entrar no site';
+$string['startsignup'] = 'Criar nova conta';
+$string['forgotten'] = 'Esqueceu seu nome de usuário ou senha?';
+$string['firsttime'] = 'É sua primeira vez aqui?';
+$string['newaccount'] = 'Criar uma nova conta';
+$string['loginguest'] = 'Entrar como visitante';
+$string['someallowguest'] = 'Alguns cursos podem permitir acesso de visitantes';
+$string['forgotaccount'] = 'Perdeu a senha?';
 
-// Course page strings
-$string['teacher'] = 'Teacher';
-$string['teachers'] = 'Teachers';
-$string['enrolledusers'] = '{$a} enrolled users';
-$string['startdate'] = 'Start date';
-$string['enddate'] = 'End date';
-$string['coursecompleted'] = 'Congratulations! You have completed this course.';
-$string['congratulations'] = 'Congratulations!';
-$string['progress'] = 'Progress';
-$string['complete'] = 'complete';
-$string['courseheader'] = 'Course header';
-$string['breadcrumb'] = 'Breadcrumb navigation';
-$string['courseprogress'] = 'Course progress';
-$string['coursecompletion'] = 'Course completion';
+// Course page strings - CORRECTED
+$string['teacher'] = 'Professor';
+$string['teachers'] = 'Professores';
+$string['enrolledusers'] = '{$a} usuários inscritos';
+$string['startdate'] = 'Data de início';
+$string['enddate'] = 'Data de término';
+$string['coursecompleted'] = 'Parabéns! Você concluiu este curso.';
+$string['congratulations'] = 'Parabéns!';
+$string['progress'] = 'Progresso';
+$string['complete'] = 'completo';
+$string['courseheader'] = 'Cabeçalho do curso';
+$string['breadcrumb'] = 'Navegação estrutural';
+$string['courseprogress'] = 'Progresso do curso';
+$string['coursecompletion'] = 'Conclusão do curso';
 
 // User interface strings
-$string['darkmodeon'] = 'Dark mode enabled';
-$string['darkmodeoff'] = 'Dark mode disabled';
-$string['totop'] = 'Back to top';
-$string['skipmain'] = 'Skip to main content';
-$string['skipnav'] = 'Skip navigation';
-$string['skipnavigation'] = 'Skip navigation';
-$string['skipmainmenu'] = 'Skip main menu';
-$string['skipmaincontent'] = 'Skip to main content';
-$string['skipsettingsmenu'] = 'Skip settings menu';
-$string['skipfooter'] = 'Skip to footer';
-$string['themepreferences'] = 'Theme preferences';
+$string['darkmodeon'] = 'Modo escuro ativado';
+$string['darkmodeoff'] = 'Modo escuro desativado';
+$string['totop'] = 'Voltar ao topo';
+$string['skipmain'] = 'Pular para o conteúdo principal';
+$string['skipnav'] = 'Pular navegação';
+$string['skipnavigation'] = 'Pular navegação';
+$string['skipmainmenu'] = 'Pular menu principal';
+$string['skipmaincontent'] = 'Pular para o conteúdo principal';
+$string['skipsettingsmenu'] = 'Pular menu de configurações';
+$string['skipfooter'] = 'Pular para o rodapé';
+$string['themepreferences'] = 'Preferências do tema';
 
 // Privacy strings
-$string['privacy:metadata'] = 'The UFPel theme does not store any personal data.';
-$string['privacy:metadata:preference:darkmode'] = 'User preference for dark mode.';
-$string['privacy:metadata:preference:compactview'] = 'User preference for compact view.';
-$string['privacy:metadata:preference:draweropen'] = 'User preference for navigation drawer state.';
+$string['privacy:metadata'] = 'O tema UFPel não armazena nenhum dado pessoal.';
+$string['privacy:metadata:preference:darkmode'] = 'Preferência do usuário para o modo escuro.';
+$string['privacy:metadata:preference:compactview'] = 'Preferência do usuário para visualização compacta.';
+$string['privacy:metadata:preference:draweropen'] = 'Preferência do usuário para o estado da gaveta de navegação.';
 
 // Region strings
-$string['region-side-pre'] = 'Left';
-$string['region-side-post'] = 'Right';
+$string['region-side-pre'] = 'Esquerda';
+$string['region-side-post'] = 'Direita';
 
 // Accessibility strings
-$string['skipto'] = 'Skip to {$a}';
-$string['accessibilitymenu'] = 'Accessibility menu';
-$string['increasefontsize'] = 'Increase font size';
-$string['decreasefontsize'] = 'Decrease font size';
-$string['resetfontsize'] = 'Reset font size';
-$string['highcontrast'] = 'High contrast';
-$string['normalcontrast'] = 'Normal contrast';
+$string['skipto'] = 'Pular para {$a}';
+$string['accessibilitymenu'] = 'Menu de acessibilidade';
+$string['increasefontsize'] = 'Aumentar tamanho da fonte';
+$string['decreasefontsize'] = 'Diminuir tamanho da fonte';
+$string['resetfontsize'] = 'Redefinir tamanho da fonte';
+$string['highcontrast'] = 'Alto contraste';
+$string['normalcontrast'] = 'Contraste normal';
 
 // Notification strings
-$string['loading'] = 'Loading...';
-$string['error'] = 'Error';
-$string['success'] = 'Success';
-$string['warning'] = 'Warning';
-$string['info'] = 'Information';
-$string['close'] = 'Close';
-$string['expand'] = 'Expand';
-$string['collapse'] = 'Collapse';
+$string['loading'] = 'Carregando...';
+$string['error'] = 'Erro';
+$string['success'] = 'Sucesso';
+$string['warning'] = 'Aviso';
+$string['info'] = 'Informação';
+$string['close'] = 'Fechar';
+$string['expand'] = 'Expandir';
+$string['collapse'] = 'Recolher';
 $string['menu'] = 'Menu';
-$string['search'] = 'Search';
-$string['filter'] = 'Filter';
-$string['sort'] = 'Sort';
-$string['settings'] = 'Settings';
-$string['notifications'] = 'Notifications';
+$string['search'] = 'Buscar';
+$string['filter'] = 'Filtrar';
+$string['sort'] = 'Ordenar';
+$string['settings'] = 'Configurações';
+$string['notifications'] = 'Notificações';
 
 // Additional feature strings
-$string['showcourseprogressinheader'] = 'Show progress in header';
-$string['showcourseprogressinheader_desc'] = 'Display the course progress bar in the header when completion tracking is enabled.';
-$string['showcoursesummary'] = 'Show course summary';
-$string['showcoursesummary_desc'] = 'Display the course summary in the course page header.';
-$string['enablelazyloading'] = 'Enable lazy loading';
-$string['enablelazyloading_desc'] = 'Load images and iframes only when needed to improve performance.';
-$string['enablecssoptimization'] = 'Optimize CSS';
-$string['enablecssoptimization_desc'] = 'Enable CSS optimization and minification for better performance.';
-$string['enableresourcehints'] = 'Enable resource hints';
-$string['enableresourcehints_desc'] = 'Use preload and prefetch to improve resource loading.';
-$string['enableanimations'] = 'Enable animations';
-$string['enableanimations_desc'] = 'Enable smooth animations and transitions. Disable for better performance on slower devices.';
-$string['enableaccessibilitytools'] = 'Accessibility tools';
-$string['enableaccessibilitytools_desc'] = 'Enable additional accessibility tools like contrast adjustment and font size controls.';
-$string['enabledarkmode'] = 'Enable dark mode';
-$string['enabledarkmode_desc'] = 'Allow users to switch to dark mode.';
-$string['enablecompactview'] = 'Enable compact view';
-$string['enablecompactview_desc'] = 'Allow users to switch to a more compact view.';
+$string['showcourseprogressinheader'] = 'Mostrar progresso no cabeçalho';
+$string['showcourseprogressinheader_desc'] = 'Exibir a barra de progresso do curso no cabeçalho quando o rastreamento de conclusão estiver ativado.';
+$string['showcoursesummary'] = 'Mostrar resumo do curso';
+$string['showcoursesummary_desc'] = 'Exibir o resumo do curso no cabeçalho da página do curso.';
+$string['enablelazyloading'] = 'Ativar carregamento preguiçoso';
+$string['enablelazyloading_desc'] = 'Carregar imagens e iframes apenas quando necessário para melhorar o desempenho.';
+$string['enablecssoptimization'] = 'Otimizar CSS';
+$string['enablecssoptimization_desc'] = 'Ativar otimização e minificação de CSS para melhor desempenho.';
+$string['enableresourcehints'] = 'Ativar dicas de recursos';
+$string['enableresourcehints_desc'] = 'Usar preload e prefetch para melhorar o carregamento de recursos.';
+$string['enableanimations'] = 'Ativar animações';
+$string['enableanimations_desc'] = 'Ativar animações e transições suaves. Desative para melhor desempenho em dispositivos mais lentos.';
+$string['enableaccessibilitytools'] = 'Ferramentas de acessibilidade';
+$string['enableaccessibilitytools_desc'] = 'Ativar ferramentas adicionais de acessibilidade como ajuste de contraste e controles de tamanho de fonte.';
+$string['enabledarkmode'] = 'Ativar modo escuro';
+$string['enabledarkmode_desc'] = 'Permitir que os usuários alternem para o modo escuro.';
+$string['enablecompactview'] = 'Ativar visualização compacta';
+$string['enablecompactview_desc'] = 'Permitir que os usuários alternem para uma visualização mais compacta.';
 
 // Social media strings
-$string['social_facebook'] = 'Facebook URL';
-$string['social_facebook_desc'] = 'URL of the institution\'s Facebook page';
-$string['social_twitter'] = 'Twitter/X URL';
-$string['social_twitter_desc'] = 'URL of the institution\'s Twitter/X page';
-$string['social_linkedin'] = 'LinkedIn URL';
-$string['social_linkedin_desc'] = 'URL of the institution\'s LinkedIn page';
-$string['social_youtube'] = 'YouTube URL';
-$string['social_youtube_desc'] = 'URL of the institution\'s YouTube channel';
-$string['social_instagram'] = 'Instagram URL';
-$string['social_instagram_desc'] = 'URL of the institution\'s Instagram page';
+$string['social_facebook'] = 'URL do Facebook';
+$string['social_facebook_desc'] = 'URL da página do Facebook da instituição';
+$string['social_twitter'] = 'URL do Twitter/X';
+$string['social_twitter_desc'] = 'URL da página do Twitter/X da instituição';
+$string['social_linkedin'] = 'URL do LinkedIn';
+$string['social_linkedin_desc'] = 'URL da página do LinkedIn da instituição';
+$string['social_youtube'] = 'URL do YouTube';
+$string['social_youtube_desc'] = 'URL do canal do YouTube da instituição';
+$string['social_instagram'] = 'URL do Instagram';
+$string['social_instagram_desc'] = 'URL da página do Instagram da instituição';
 
-// Dashboard and navigation
-$string['dashboard'] = 'Dashboard';
-$string['sitehome'] = 'Site home';
-$string['participants'] = 'Participants';
-$string['reports'] = 'Reports';
-$string['badges'] = 'Badges';
-$string['competencies'] = 'Competencies';
-$string['grades'] = 'Grades';
-$string['messages'] = 'Messages';
-$string['preferences'] = 'Preferences';
-
-// Course display
-$string['coursecategories'] = 'Course categories';
-$string['coursecategory'] = 'Course category';
-$string['recentactivity'] = 'Recent activity';
-$string['nocoursesyet'] = 'No courses available yet';
-$string['viewallcourses'] = 'View all courses';
-$string['mycourses'] = 'My courses';
-$string['allcourses'] = 'All courses';
-$string['nocourses'] = 'No courses';
-$string['timeline'] = 'Timeline';
-$string['enrollmentkey'] = 'Enrollment key';
-$string['courseaccess'] = 'Course access';
-
-// User profile
-$string['userprofile'] = 'User profile';
-$string['editprofile'] = 'Edit profile';
-
-// Additional UI elements
-$string['edit'] = 'Edit';
-$string['delete'] = 'Delete';
-$string['save'] = 'Save';
-$string['cancel'] = 'Cancel';
-$string['submit'] = 'Submit';
-$string['view'] = 'View';
-$string['download'] = 'Download';
-$string['upload'] = 'Upload';
-$string['select'] = 'Select';
-$string['open'] = 'Open';
-$string['more'] = 'More';
-$string['less'] = 'Less';
-
-// Status messages
-$string['completed'] = 'Completed';
-$string['incomplete'] = 'Incomplete';
-$string['inprogress'] = 'In progress';
-$string['notstarted'] = 'Not started';
-$string['processing'] = 'Processing...';
+// Additional strings for completeness
+$string['dashboard'] = 'Painel';
+$string['sitehome'] = 'Página inicial do site';
+$string['participants'] = 'Participantes';
+$string['reports'] = 'Relatórios';
+$string['badges'] = 'Emblemas';
+$string['competencies'] = 'Competências';
+$string['grades'] = 'Notas';
+$string['messages'] = 'Mensagens';
+$string['preferences'] = 'Preferências';
+$string['timeline'] = 'Linha do tempo';
+$string['mycourses'] = 'Meus cursos';
+$string['allcourses'] = 'Todos os cursos';
+$string['coursecategories'] = 'Categorias de cursos';
+$string['coursecategory'] = 'Categoria do curso';
+$string['recentactivity'] = 'Atividade recente';
+$string['nocoursesyet'] = 'Nenhum curso disponível ainda';
+$string['viewallcourses'] = 'Ver todos os cursos';
+$string['nocourses'] = 'Nenhum curso';
+$string['enrollmentkey'] = 'Chave de inscrição';
+$string['courseaccess'] = 'Acesso ao curso';
+$string['userprofile'] = 'Perfil do usuário';
+$string['editprofile'] = 'Editar perfil';
+$string['termsofuse'] = 'Termos de uso';
+$string['datasecurity'] = 'Segurança de dados';
+$string['copyright'] = 'Direitos autorais';
+$string['siteadmin'] = 'Administração do site';
+$string['sitemenu'] = 'Menu do site';
+$string['navigationmenu'] = 'Menu de navegação';
+$string['usermenu'] = 'Menu do usuário';
+$string['languagemenu'] = 'Menu de idiomas';
 
 // Time related
-$string['today'] = 'Today';
-$string['yesterday'] = 'Yesterday';
-$string['tomorrow'] = 'Tomorrow';
-$string['lastweek'] = 'Last week';
-$string['nextweek'] = 'Next week';
-$string['lastmonth'] = 'Last month';
-$string['nextmonth'] = 'Next month';
+$string['today'] = 'Hoje';
+$string['yesterday'] = 'Ontem';
+$string['tomorrow'] = 'Amanhã';
+$string['lastweek'] = 'Semana passada';
+$string['nextweek'] = 'Próxima semana';
+$string['lastmonth'] = 'Mês passado';
+$string['nextmonth'] = 'Próximo mês';
 
 // Actions
-$string['browsecourses'] = 'Browse courses';
-$string['popularlinks'] = 'Popular links';
-$string['quickaccess'] = 'Quick access';
-$string['needhelp'] = 'Need help?';
-$string['contactsupport'] = 'Contact support';
-$string['welcomeback'] = 'Welcome back!';
-$string['logintitle'] = 'Log in to UFPel Moodle';
-$string['logindescription'] = 'Please enter your credentials to access the learning platform.';
+$string['edit'] = 'Editar';
+$string['delete'] = 'Excluir';
+$string['save'] = 'Salvar';
+$string['cancel'] = 'Cancelar';
+$string['submit'] = 'Enviar';
+$string['view'] = 'Visualizar';
+$string['download'] = 'Baixar';
+$string['upload'] = 'Enviar';
+$string['select'] = 'Selecionar';
+$string['open'] = 'Abrir';
+$string['more'] = 'Mais';
+$string['less'] = 'Menos';
+$string['browsecourses'] = 'Procurar cursos';
+$string['popularlinks'] = 'Links populares';
+$string['quickaccess'] = 'Acesso rápido';
+$string['needhelp'] = 'Precisa de ajuda?';
+$string['contactsupport'] = 'Contatar suporte';
+$string['welcomeback'] = 'Bem-vindo de volta!';
+$string['logintitle'] = 'Entrar no Moodle UFPel';
+$string['logindescription'] = 'Por favor, insira suas credenciais para acessar a plataforma de aprendizagem.';
 
-// Terms and conditions
-$string['termsofuse'] = 'Terms of use';
-$string['datasecurity'] = 'Data security';
-$string['copyright'] = 'Copyright';
-$string['siteadmin'] = 'Site administration';
-$string['sitemenu'] = 'Site menu';
-$string['navigationmenu'] = 'Navigation menu';
-$string['usermenu'] = 'User menu';
-$string['languagemenu'] = 'Language menu';
+// Status messages
+$string['completed'] = 'Concluído';
+$string['incomplete'] = 'Incompleto';
+$string['inprogress'] = 'Em andamento';
+$string['notstarted'] = 'Não iniciado';
+$string['processing'] = 'Processando...';
 
 // Development and debugging
-$string['version'] = 'Version';
-$string['author'] = 'Author';
-$string['license'] = 'License';
-$string['website'] = 'Website';
-$string['repository'] = 'Repository';
-$string['issuetracker'] = 'Issue tracker';
-$string['documentation_link'] = 'Documentation link';
+$string['version'] = 'Versão';
+$string['author'] = 'Autor';
+$string['license'] = 'Licença';
+$string['website'] = 'Site';
+$string['repository'] = 'Repositório';
+$string['issuetracker'] = 'Rastreador de problemas';
+$string['documentation_link'] = 'Link da documentação';
 
 // Error messages
-$string['error:missinglogo'] = 'Logo not found';
-$string['error:invalidcolor'] = 'Invalid color code';
-$string['error:fileuploadfailed'] = 'File upload failed';
+$string['error:missinglogo'] = 'Logo não encontrado';
+$string['error:invalidcolor'] = 'Código de cor inválido';
+$string['error:fileuploadfailed'] = 'Falha no envio do arquivo';
 
 // Help strings
-$string['help:primarycolor'] = 'This color will be applied to the main interface elements';
-$string['help:darkmode'] = 'Dark mode reduces eye strain in low-light environments';
-$string['help:lazyloading'] = 'Lazy loading significantly improves performance on pages with many images';
+$string['help:primarycolor'] = 'Esta cor será aplicada aos principais elementos da interface';
+$string['help:darkmode'] = 'O modo escuro reduz o cansaço visual em ambientes com pouca luz';
+$string['help:lazyloading'] = 'O carregamento preguiçoso melhora significativamente o desempenho em páginas com muitas imagens';
 
 // Administrative strings
 $string['themesettings'] = 'Configurações do tema UFPel';
-$string['resetsettings'] = 'Reset settings';
-$string['resetsettings_desc'] = 'Reset all theme settings to default values';
-$string['settingssaved'] = 'Settings saved successfully';
-$string['settingsreset'] = 'Settings reset to default values';
+$string['resetsettings'] = 'Redefinir configurações';
+$string['resetsettings_desc'] = 'Redefinir todas as configurações do tema para os valores padrão';
+$string['settingssaved'] = 'Configurações salvas com sucesso';
+$string['settingsreset'] = 'Configurações redefinidas para os valores padrão';

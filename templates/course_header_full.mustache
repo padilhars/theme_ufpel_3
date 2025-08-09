@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="col-12">
                         {{#hascategories}}
-                        <nav class="ufpel-course-breadcrumb" aria-label="{{#str}}breadcrumb{{/str}}">
+                        <nav class="ufpel-course-breadcrumb" aria-label="{{#str}}breadcrumb, theme_ufpel{{/str}}">
                             <ol class="breadcrumb">
                                 {{#categories}}
                                 <li class="breadcrumb-item">
@@ -151,14 +151,14 @@
                             {{#enrollmentinfo.startdate}}
                             <span class="meta-item start-date">
                                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                {{#str}}startdate{{/str}}: {{enrollmentinfo.startdate}}
+                                {{#str}}startdate, theme_ufpel{{/str}}: {{enrollmentinfo.startdate}}
                             </span>
                             {{/enrollmentinfo.startdate}}
                             
                             {{#enrollmentinfo.enddate}}
                             <span class="meta-item end-date">
                                 <i class="fa fa-calendar-times-o" aria-hidden="true"></i>
-                                {{#str}}enddate{{/str}}: {{enrollmentinfo.enddate}}
+                                {{#str}}enddate, theme_ufpel{{/str}}: {{enrollmentinfo.enddate}}
                             </span>
                             {{/enrollmentinfo.enddate}}
                         </div>
@@ -176,7 +176,7 @@
                                      aria-valuenow="{{progress}}" 
                                      aria-valuemin="0" 
                                      aria-valuemax="100">
-                                    <span class="visually-hidden">{{progresspercentage}}% {{#str}}complete{{/str}}</span>
+                                    <span class="visually-hidden">{{progresspercentage}}% {{#str}}complete, theme_ufpel{{/str}}</span>
                                 </div>
                             </div>
                         </div>

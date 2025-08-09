@@ -289,6 +289,40 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025120103, 'theme', 'ufpel');
     }
     
+    // Version 2025120200 - Fix template string references
+    if ($oldversion < 2025120200) {
+        mtrace('theme_ufpel: Fixing template string references');
+        
+        // Clear template cache to ensure updated templates are used
+        $cachedir = $CFG->dataroot . '/localcache/mustache/-1/ufpel';
+        if (is_dir($cachedir)) {
+            // Remove all cached templates
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($cachedir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            
+            foreach ($iterator as $file) {
+                if ($file->isFile()) {
+                    unlink($file->getPathname());
+                } elseif ($file->isDir()) {
+                    rmdir($file->getPathname());
+                }
+            }
+            
+            @rmdir($cachedir);
+            mtrace('theme_ufpel: Cleared all cached templates');
+        }
+        
+        // Clear all caches
+        theme_reset_all_caches();
+        purge_all_caches();
+        
+        mtrace('theme_ufpel: Template string references fixed');
+        
+        upgrade_plugin_savepoint(true, 2025120200, 'theme', 'ufpel');
+    }
+    
     // Always clear theme caches at the end of upgrade
     theme_reset_all_caches();
     

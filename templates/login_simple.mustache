@@ -28,7 +28,7 @@
 <!DOCTYPE html>
 <html {{{ output.htmlattributes }}}>
 <head>
-    <title>{{#str}}login{{/str}} - {{{ sitename }}}</title>
+    <title>{{#str}}login, theme_ufpel{{/str}} - {{{ sitename }}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{{ output.standard_head_html }}}
     {{#hasloginbackgroundimage}}
@@ -76,11 +76,11 @@
                 
                 {{#haslogininfo}}
                 <div class="mt-3 text-center small">
-                    <a href="{{homeurl}}" class="text-muted">{{#str}}home{{/str}}</a>
+                    <a href="{{homeurl}}" class="text-muted">{{#str}}home, theme_ufpel{{/str}}</a>
                     {{#cansignup}}
-                    | <a href="{{signupurl}}" class="text-muted">{{#str}}startsignup{{/str}}</a>
+                    | <a href="{{signupurl}}" class="text-muted">{{#str}}startsignup, theme_ufpel{{/str}}</a>
                     {{/cansignup}}
-                    | <a href="{{forgotpasswordurl}}" class="text-muted">{{#str}}forgotten{{/str}}</a>
+                    | <a href="{{forgotpasswordurl}}" class="text-muted">{{#str}}forgotten, theme_ufpel{{/str}}</a>
                 </div>
                 {{/haslogininfo}}
             </div>

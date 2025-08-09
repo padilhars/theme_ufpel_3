@@ -37,7 +37,7 @@ $string['performance'] = 'Performance';
 $string['accessibility'] = 'Accessibility';
 $string['default'] = 'Default';
 
-// Settings headings - MISSING STRINGS ADDED
+// Settings headings
 $string['colorsheading'] = 'Color Settings';
 $string['colorsheading_desc'] = 'Configure the color scheme for your theme. These colors will be applied throughout the site.';
 $string['logoheading'] = 'Logo and Branding';
@@ -145,7 +145,7 @@ $string['loginguest'] = 'Log in as a guest';
 $string['someallowguest'] = 'Some courses may allow guest access';
 $string['forgotaccount'] = 'Lost password?';
 
-// Course page strings
+// Course page strings - CORRECTED
 $string['teacher'] = 'Teacher';
 $string['teachers'] = 'Teachers';
 $string['enrolledusers'] = '{$a} enrolled users';
@@ -240,7 +240,7 @@ $string['social_youtube_desc'] = 'URL of the institution\'s YouTube channel';
 $string['social_instagram'] = 'Instagram URL';
 $string['social_instagram_desc'] = 'URL of the institution\'s Instagram page';
 
-// Dashboard and navigation
+// Additional strings for completeness
 $string['dashboard'] = 'Dashboard';
 $string['sitehome'] = 'Site home';
 $string['participants'] = 'Participants';
@@ -250,25 +250,38 @@ $string['competencies'] = 'Competencies';
 $string['grades'] = 'Grades';
 $string['messages'] = 'Messages';
 $string['preferences'] = 'Preferences';
-
-// Course display
+$string['timeline'] = 'Timeline';
+$string['mycourses'] = 'My courses';
+$string['allcourses'] = 'All courses';
 $string['coursecategories'] = 'Course categories';
 $string['coursecategory'] = 'Course category';
 $string['recentactivity'] = 'Recent activity';
 $string['nocoursesyet'] = 'No courses available yet';
 $string['viewallcourses'] = 'View all courses';
-$string['mycourses'] = 'My courses';
-$string['allcourses'] = 'All courses';
 $string['nocourses'] = 'No courses';
-$string['timeline'] = 'Timeline';
 $string['enrollmentkey'] = 'Enrollment key';
 $string['courseaccess'] = 'Course access';
-
-// User profile
 $string['userprofile'] = 'User profile';
 $string['editprofile'] = 'Edit profile';
+$string['termsofuse'] = 'Terms of use';
+$string['datasecurity'] = 'Data security';
+$string['copyright'] = 'Copyright';
+$string['siteadmin'] = 'Site administration';
+$string['sitemenu'] = 'Site menu';
+$string['navigationmenu'] = 'Navigation menu';
+$string['usermenu'] = 'User menu';
+$string['languagemenu'] = 'Language menu';
 
-// Additional UI elements
+// Time related
+$string['today'] = 'Today';
+$string['yesterday'] = 'Yesterday';
+$string['tomorrow'] = 'Tomorrow';
+$string['lastweek'] = 'Last week';
+$string['nextweek'] = 'Next week';
+$string['lastmonth'] = 'Last month';
+$string['nextmonth'] = 'Next month';
+
+// Actions
 $string['edit'] = 'Edit';
 $string['delete'] = 'Delete';
 $string['save'] = 'Save';
@@ -281,24 +294,6 @@ $string['select'] = 'Select';
 $string['open'] = 'Open';
 $string['more'] = 'More';
 $string['less'] = 'Less';
-
-// Status messages
-$string['completed'] = 'Completed';
-$string['incomplete'] = 'Incomplete';
-$string['inprogress'] = 'In progress';
-$string['notstarted'] = 'Not started';
-$string['processing'] = 'Processing...';
-
-// Time related
-$string['today'] = 'Today';
-$string['yesterday'] = 'Yesterday';
-$string['tomorrow'] = 'Tomorrow';
-$string['lastweek'] = 'Last week';
-$string['nextweek'] = 'Next week';
-$string['lastmonth'] = 'Last month';
-$string['nextmonth'] = 'Next month';
-
-// Actions
 $string['browsecourses'] = 'Browse courses';
 $string['popularlinks'] = 'Popular links';
 $string['quickaccess'] = 'Quick access';
@@ -308,15 +303,12 @@ $string['welcomeback'] = 'Welcome back!';
 $string['logintitle'] = 'Log in to UFPel Moodle';
 $string['logindescription'] = 'Please enter your credentials to access the learning platform.';
 
-// Terms and conditions
-$string['termsofuse'] = 'Terms of use';
-$string['datasecurity'] = 'Data security';
-$string['copyright'] = 'Copyright';
-$string['siteadmin'] = 'Site administration';
-$string['sitemenu'] = 'Site menu';
-$string['navigationmenu'] = 'Navigation menu';
-$string['usermenu'] = 'User menu';
-$string['languagemenu'] = 'Language menu';
+// Status messages
+$string['completed'] = 'Completed';
+$string['incomplete'] = 'Incomplete';
+$string['inprogress'] = 'In progress';
+$string['notstarted'] = 'Not started';
+$string['processing'] = 'Processing...';
 
 // Development and debugging
 $string['version'] = 'Version';
