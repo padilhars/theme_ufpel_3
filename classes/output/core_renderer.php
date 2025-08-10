@@ -63,36 +63,84 @@ class core_renderer extends \theme_boost\output\core_renderer {
     
     /**
      * Get the logo URL.
-     * IMPORTANT: This method MUST return a moodle_url object or null to maintain compatibility with Moodle core.
+     * DEFINITIVELY FIXED: Handles all cases of URL format correctly.
      *
      * @param int|null $maxwidth The maximum width, or null when the maximum width does not matter.
      * @param int $maxheight The maximum height, or null when the maximum height does not matter.
      * @return moodle_url|null The logo URL or null if not set.
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
+        global $CFG;
+        
         // Check if we have a custom logo from theme settings
         $logo = $this->page->theme->setting_file_url('logo', 'logo');
         
         if (!empty($logo)) {
-            // If it's already a moodle_url object, return it directly
+            // CASE 1: Already a moodle_url object - return directly
             if ($logo instanceof moodle_url) {
                 return $logo;
             }
             
-            // If it's not a moodle_url, we need to be careful about how we handle it
-            // The setting_file_url method might return the URL as a string
-            // We need to ensure we return a moodle_url object
-            
-            // Convert to string to check the URL format
+            // CASE 2: It's a string URL - need to process it
             $logostr = (string)$logo;
             
-            // Return a moodle_url object
-            // Note: moodle_url constructor handles absolute URLs correctly
-            // It won't duplicate the domain if the URL is already absolute
-            return new moodle_url($logostr);
+            // Check if empty after conversion
+            if (empty($logostr)) {
+                return parent::get_logo_url($maxwidth, $maxheight);
+            }
+            
+            // CRITICAL FIX: Check if the URL is absolute (contains the full domain)
+            // The setting_file_url often returns: http://domain/moodle/pluginfile.php/...
+            if (strpos($logostr, '://') !== false) {
+                // It's an absolute URL - we need to extract just the path part
+                // to avoid duplication when moodle_url adds the wwwroot again
+                
+                // Parse both the logo URL and wwwroot
+                $logo_parsed = parse_url($logostr);
+                $wwwroot_parsed = parse_url($CFG->wwwroot);
+                
+                // Check if they're from the same domain
+                if (isset($logo_parsed['host']) && isset($wwwroot_parsed['host']) && 
+                    $logo_parsed['host'] === $wwwroot_parsed['host']) {
+                    
+                    // Extract the path from the logo URL
+                    $logo_path = $logo_parsed['path'] ?? '';
+                    
+                    // Get the base path from wwwroot (e.g., '/moodle' or '')
+                    $base_path = $wwwroot_parsed['path'] ?? '';
+                    $base_path = rtrim($base_path, '/'); // Remove trailing slash
+                    
+                    // Remove the base path from the logo path if it's there
+                    if (!empty($base_path) && strpos($logo_path, $base_path) === 0) {
+                        $relative_path = substr($logo_path, strlen($base_path));
+                    } else {
+                        $relative_path = $logo_path;
+                    }
+                    
+                    // Add query string if exists
+                    if (!empty($logo_parsed['query'])) {
+                        $relative_path .= '?' . $logo_parsed['query'];
+                    }
+                    
+                    // Create moodle_url with relative path
+                    // This prevents duplication because moodle_url will add wwwroot automatically
+                    return new moodle_url($relative_path);
+                } else {
+                    // Different domain - use as external URL
+                    return new moodle_url($logostr);
+                }
+            } else if (strpos($logostr, '/') === 0) {
+                // CASE 3: It's already a relative URL starting with /
+                // Safe to use directly with moodle_url
+                return new moodle_url($logostr);
+            } else {
+                // CASE 4: Relative URL without leading slash
+                // Add leading slash and create moodle_url
+                return new moodle_url('/' . $logostr);
+            }
         }
         
-        // Fall back to parent implementation if no custom logo
+        // No custom logo - fall back to parent implementation
         return parent::get_logo_url($maxwidth, $maxheight);
     }
     

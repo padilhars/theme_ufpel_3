@@ -226,6 +226,7 @@ function theme_ufpel_css_tree_post_processor($css, $theme) {
 
 /**
  * Serves any files associated with the theme settings.
+ * FIXED: Better handling of file serving to prevent URL issues.
  *
  * @param stdClass $course The course object.
  * @param stdClass $cm The course module object.
@@ -248,7 +249,10 @@ function theme_ufpel_pluginfile($course, $cm, $context, $filearea, $args, $force
         return false;
     }
     
+    // Use theme_config to serve the file
     $theme = theme_config::load('ufpel');
+    
+    // The setting_file_serve method handles the file serving correctly
     return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
 }
 
@@ -614,55 +618,125 @@ function theme_ufpel_get_critical_css() {
 // by the hooks system in classes/hooks/output_callbacks.php
 
 /**
- * Process a file URL to ensure it's not duplicated.
- * This helper function handles the conversion of theme file URLs
- * to prevent duplication issues.
+ * Process a theme file URL to ensure it returns a proper moodle_url object
+ * without duplication issues.
+ * FIXED: This function prevents URL duplication problems.
  *
- * @param mixed $url The URL to process (can be string, moodle_url, or null)
- * @return string|null The processed URL string or null if empty
+ * @param mixed $url The URL to process (can be string or moodle_url)
+ * @return moodle_url|null The processed moodle_url object or null if empty
  */
-function theme_ufpel_process_file_url($url) {
+function theme_ufpel_process_theme_file_url($url) {
+    global $CFG;
+    
     if (empty($url)) {
         return null;
     }
     
-    // If it's already a moodle_url object, get its string representation
+    // If it's already a moodle_url object, return it
     if ($url instanceof moodle_url) {
-        return $url->out(false);
+        return $url;
     }
     
     // Convert to string for processing
     $urlstr = (string)$url;
     
-    // Check if it's empty after conversion
     if (empty($urlstr)) {
         return null;
     }
     
-    // Check if it's already an absolute URL
-    // Matches: http://, https://, // (protocol-relative)
-    if (preg_match('#^(https?:)?//#', $urlstr)) {
-        // It's already absolute, return as is
-        return $urlstr;
+    // Parse the URL to check its structure
+    $parsed = parse_url($urlstr);
+    
+    // If the URL has a scheme (http/https), it's absolute
+    if (!empty($parsed['scheme'])) {
+        // Extract the path and query components
+        $path = $parsed['path'] ?? '';
+        if (!empty($parsed['query'])) {
+            $path .= '?' . $parsed['query'];
+        }
+        if (!empty($parsed['fragment'])) {
+            $path .= '#' . $parsed['fragment'];
+        }
+        
+        // Check if the path contains the wwwroot path
+        $wwwroot_parsed = parse_url($CFG->wwwroot);
+        $wwwroot_path = $wwwroot_parsed['path'] ?? '';
+        
+        if (!empty($wwwroot_path) && strpos($path, $wwwroot_path) === 0) {
+            // Remove the wwwroot path to make it relative
+            $relative_path = substr($path, strlen($wwwroot_path));
+            // Ensure it starts with /
+            if (strpos($relative_path, '/') !== 0) {
+                $relative_path = '/' . $relative_path;
+            }
+            return new moodle_url($relative_path);
+        } else {
+            // Use the path as is
+            return new moodle_url($path);
+        }
+    } else {
+        // It's a relative URL, safe to use with moodle_url constructor
+        return new moodle_url($urlstr);
+    }
+}
+
+/**
+ * Safely convert a theme file URL to a string without duplication.
+ * FIXED: This function ensures URLs are not duplicated when converted to strings.
+ *
+ * @param mixed $url The URL to convert (can be string, moodle_url, or null)
+ * @return string|null The URL string or null if empty
+ */
+function theme_ufpel_url_to_string($url) {
+    if (empty($url)) {
+        return null;
     }
     
-    // Check if it starts with a slash (site-relative URL)
-    if (strpos($urlstr, '/') === 0) {
-        global $CFG;
-        // It's a site-relative URL, prepend the wwwroot
-        return $CFG->wwwroot . $urlstr;
+    // If it's a moodle_url object, get its string representation
+    if ($url instanceof moodle_url) {
+        return $url->out(false);
     }
     
-    // It's a relative URL or needs processing
-    // Create a proper moodle_url and return its string representation
-    try {
-        $moodleurl = new moodle_url($urlstr);
-        return $moodleurl->out(false);
-    } catch (Exception $e) {
-        // If there's an error creating the URL, return the original
-        debugging('Error processing URL in theme_ufpel: ' . $e->getMessage(), DEBUG_DEVELOPER);
-        return $urlstr;
+    // If it's already a string, process it to avoid duplication
+    $urlstr = (string)$url;
+    
+    if (empty($urlstr)) {
+        return null;
     }
+    
+    // Check for obvious duplication patterns
+    global $CFG;
+    $wwwroot = rtrim($CFG->wwwroot, '/');
+    
+    // Pattern: http://domain//domain/path or http://domain/domain/path
+    if (preg_match('#^(https?://[^/]+)/+\1#i', $urlstr)) {
+        // URL is duplicated, extract the correct part
+        $parsed = parse_url($urlstr);
+        if ($parsed && isset($parsed['scheme']) && isset($parsed['host'])) {
+            $base = $parsed['scheme'] . '://' . $parsed['host'];
+            $path = $parsed['path'] ?? '';
+            
+            // Remove duplicated host from path
+            $path = preg_replace('#^/+' . preg_quote($parsed['host'], '#') . '#', '', $path);
+            
+            $urlstr = $base . $path;
+            if (!empty($parsed['query'])) {
+                $urlstr .= '?' . $parsed['query'];
+            }
+            if (!empty($parsed['fragment'])) {
+                $urlstr .= '#' . $parsed['fragment'];
+            }
+        }
+    }
+    
+    // Check if the URL contains the wwwroot twice
+    $wwwroot_escaped = preg_quote($wwwroot, '#');
+    if (preg_match('#' . $wwwroot_escaped . '/+' . $wwwroot_escaped . '#', $urlstr)) {
+        // Remove the duplicate
+        $urlstr = preg_replace('#' . $wwwroot_escaped . '/+' . $wwwroot_escaped . '#', $wwwroot, $urlstr);
+    }
+    
+    return $urlstr;
 }
 
 /**
@@ -743,6 +817,3 @@ function theme_ufpel_validate_file_url($url) {
     
     return $cleanurl;
 }
-
-// Add this to the existing lib.php file, do not duplicate the entire file
-// These are helper functions to be added to the existing lib.php

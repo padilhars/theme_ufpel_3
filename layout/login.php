@@ -37,39 +37,49 @@ $templatecontext = [
     'bodyattributes' => $OUTPUT->body_attributes(['class' => 'pagelayout-login']),
 ];
 
-// Add logo URL if available - Fixed to prevent URL duplication
+// FIXED: Handle logo URL correctly - get_logo_url() returns moodle_url object or null
 if (method_exists($renderer, 'get_logo_url')) {
     $logourl = $renderer->get_logo_url();
     if ($logourl) {
-        // Convert to string properly
-        if ($logourl instanceof moodle_url) {
-            $templatecontext['logourl'] = $logourl->out(false);
-        } else {
-            // It's already a string or can be cast to string
-            $logourlstr = (string)$logourl;
-            // Check if it's already an absolute URL to avoid duplication
-            if (preg_match('#^(https?:)?//#', $logourlstr)) {
-                $templatecontext['logourl'] = $logourlstr;
-            } else {
-                // It's a relative URL, make it absolute
-                $templatecontext['logourl'] = (new moodle_url($logourlstr))->out(false);
-            }
-        }
+        // get_logo_url returns a moodle_url object, so we use ->out(false) to get the string
+        $templatecontext['logourl'] = $logourl->out(false);
     }
 }
 
-// Add background image if configured - Fixed to prevent URL duplication
+// FIXED: Handle background image URL correctly
 $loginbgimg = $PAGE->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
 if (!empty($loginbgimg)) {
-    // Ensure it's a string URL
+    // Process the background image URL
     if ($loginbgimg instanceof moodle_url) {
+        // It's already a moodle_url object
         $templatecontext['loginbackgroundimage'] = $loginbgimg->out(false);
     } else {
-        // Convert to string and check format
+        // It's a string, need to process it
         $bgimgstr = (string)$loginbgimg;
-        if (preg_match('#^(https?:)?//#', $bgimgstr)) {
-            $templatecontext['loginbackgroundimage'] = $bgimgstr;
+        
+        // Parse the URL to check if it's absolute
+        $parsed = parse_url($bgimgstr);
+        
+        if (!empty($parsed['scheme'])) {
+            // It's an absolute URL, extract the path
+            global $CFG;
+            $wwwroot_parsed = parse_url($CFG->wwwroot);
+            $wwwroot_path = $wwwroot_parsed['path'] ?? '';
+            
+            $path = $parsed['path'] ?? '';
+            if (!empty($parsed['query'])) {
+                $path .= '?' . $parsed['query'];
+            }
+            
+            // If the path starts with the wwwroot path, make it relative
+            if (!empty($wwwroot_path) && strpos($path, $wwwroot_path) === 0) {
+                $relative_path = substr($path, strlen($wwwroot_path));
+                $templatecontext['loginbackgroundimage'] = (new moodle_url($relative_path))->out(false);
+            } else {
+                $templatecontext['loginbackgroundimage'] = (new moodle_url($path))->out(false);
+            }
         } else {
+            // It's a relative URL
             $templatecontext['loginbackgroundimage'] = (new moodle_url($bgimgstr))->out(false);
         }
     }

@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Plugin version (YYYYMMDDXX where XX is the daily increment).
-$plugin->version   = 2025120202; // Fixed login page logo URL duplication issue
+$plugin->version   = 2025120203; // Fixed URL duplication issues definitively
 $plugin->requires  = 2024100700; // Moodle 5.0 or later
 
 // Plugin component name.
@@ -35,7 +35,7 @@ $plugin->component = 'theme_ufpel';
 $plugin->maturity  = MATURITY_STABLE;
 
 // Human-readable release version.
-$plugin->release   = '1.2.4'; // Fixed login page logo URL duplication
+$plugin->release   = '1.2.5'; // Fixed URL duplication definitively
 
 // Dependencies.
 $plugin->dependencies = [

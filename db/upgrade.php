@@ -413,6 +413,63 @@ function xmldb_theme_ufpel_upgrade($oldversion) {
         
         upgrade_plugin_savepoint(true, 2025120202, 'theme', 'ufpel');
     }
+
+    // Version 2025120203 - Fix URL duplication issues definitively
+    if ($oldversion < 2025120203) {
+        mtrace('theme_ufpel: Fixing URL duplication issues definitively');
+        
+        // Clear all template caches to ensure new templates are used
+        $cachedir = $CFG->dataroot . '/localcache/mustache/-1/ufpel';
+        if (is_dir($cachedir)) {
+            // Remove all cached templates
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($cachedir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            
+            foreach ($iterator as $file) {
+                if ($file->isFile()) {
+                    unlink($file->getPathname());
+                } elseif ($file->isDir()) {
+                    rmdir($file->getPathname());
+                }
+            }
+            
+            @rmdir($cachedir);
+            mtrace('theme_ufpel: Cleared all cached templates');
+        }
+        
+        // Clear all JavaScript cache  
+        $jscachedir = $CFG->dataroot . '/localcache/js';
+        if (is_dir($jscachedir)) {
+            $jsfiles = glob($jscachedir . '/*theme_ufpel*');
+            foreach ($jsfiles as $jsfile) {
+                if (is_file($jsfile)) {
+                    unlink($jsfile);
+                }
+            }
+            mtrace('theme_ufpel: Cleared JavaScript cache');
+        }
+        
+        // Clear PHP opcache if available
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+            mtrace('theme_ufpel: Cleared PHP opcache');
+        }
+        
+        // Clear all Moodle caches
+        theme_reset_all_caches();
+        purge_all_caches();
+        
+        // Rebuild course cache
+        rebuild_course_cache(0, true);
+        
+        mtrace('theme_ufpel: URL duplication issues fixed definitively');
+        mtrace('theme_ufpel: The get_logo_url() method now properly returns moodle_url objects');
+        mtrace('theme_ufpel: Login layout now correctly handles moodle_url objects');
+        
+        upgrade_plugin_savepoint(true, 2025120203, 'theme', 'ufpel');
+    }
     
     // Always clear theme caches at the end of upgrade
     theme_reset_all_caches();
