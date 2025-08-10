@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme UFPel config file - Updated for Moodle 5.x.
+ * Theme UFPel config file - Fixed for Moodle 5.x
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -24,64 +24,170 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Theme name.
+// Theme name
 $THEME->name = 'ufpel';
 
-// Theme parent - inherits all settings from Boost.
+// Theme parent - inherits from Boost
 $THEME->parents = ['boost'];
 
-// Theme sheets - none as we use SCSS.
+// Theme sheets - empty as we use SCSS
 $THEME->sheets = [];
 
-// Editor sheets to load.
-$THEME->editor_sheets = ['editor'];
+// Editor sheets
+$THEME->editor_sheets = [];
 
-// Use parent editor sheets from Boost.
-$THEME->parentseditorsheets = ['boost'];
-
-// SCSS processing functions.
+// SCSS processing function
 $THEME->scss = function($theme) {
     return theme_ufpel_get_main_scss_content($theme);
 };
 
-// Pre-SCSS callback - for variables.
+// Pre-SCSS callback
 $THEME->prescsscallback = 'theme_ufpel_get_pre_scss';
 
-// Extra SCSS callback - for additional styles.
+// Extra SCSS callback
 $THEME->extrascsscallback = 'theme_ufpel_get_extra_scss';
 
-// CSS post-processing callback - Updated for Moodle 5.x.
+// CSS post-processing callback
 $THEME->csstreepostprocessor = 'theme_ufpel_css_tree_post_processor';
 
-// Inherit all layouts from Boost.
+// Layouts configuration - CORREÇÃO PRINCIPAL
 $THEME->layouts = [
-    // Use parent theme login layout to avoid issues
-    'login' => [
-        'file' => 'login.php',
-        'regions' => [],
-        'options' => ['nofooter' => true, 'nonavbar' => true],
-    ],
+    // Base layouts inherit from parent
+    'base' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+    ),
+    // Standard layout
+    'standard' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // Course layout
+    'course' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+        'options' => array('langmenu' => true),
+    ),
+    // Course category
+    'coursecategory' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // Front page
+    'frontpage' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // Admin
+    'admin' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // My Dashboard
+    'mydashboard' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // My courses
+    'mycourses' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // LOGIN LAYOUT - Configuração específica para corrigir o erro
+    'login' => array(
+        'file' => 'login.php',  // Usa nosso arquivo login.php customizado
+        'regions' => array(),
+        'options' => array(
+            'langmenu' => true,
+            'nonavbar' => true,
+            'nofooter' => true,
+            'nocourseheaderfooter' => true
+        ),
+    ),
+    // Popup layout
+    'popup' => array(
+        'theme' => 'boost',
+        'file' => 'embedded.php',
+        'regions' => array(),
+        'options' => array(
+            'nofooter' => true,
+            'nonavbar' => true,
+            'nocourseheaderfooter' => true
+        ),
+    ),
+    // Embedded pages
+    'embedded' => array(
+        'theme' => 'boost',
+        'file' => 'embedded.php',
+        'regions' => array(),
+        'options' => array(
+            'nofooter' => true,
+            'nonavbar' => true,
+            'nocourseheaderfooter' => true
+        ),
+    ),
+    // Maintenance layout
+    'maintenance' => array(
+        'theme' => 'boost',
+        'file' => 'maintenance.php',
+        'regions' => array(),
+    ),
+    // Print layout
+    'print' => array(
+        'theme' => 'boost',
+        'file' => 'print.php',
+        'regions' => array(),
+        'options' => array('nofooter' => true, 'nonavbar' => false),
+    ),
+    // Report layout
+    'report' => array(
+        'theme' => 'boost',
+        'file' => 'drawers.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
+    // Secure layout (for payments, etc)
+    'secure' => array(
+        'theme' => 'boost',
+        'file' => 'secure.php',
+        'regions' => array('side-pre'),
+        'defaultregion' => 'side-pre',
+    ),
 ];
 
-// Renderer factory.
+// Renderer factory
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
-// Required blocks - none specific to UFPel.
+// Required blocks
 $THEME->requiredblocks = '';
 
-// Add blocks position - Updated for Moodle 5.x.
+// Add block position
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 
-// Icon system - FontAwesome.
+// Icon system
 $THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
 
-// Features inherited from Boost - Updated for Moodle 5.x.
+// Features from Boost
 $THEME->haseditswitch = true;
 $THEME->usescourseindex = true;
 $THEME->primary_navigation_favourites = true;
 $THEME->usescombolistbox = true;
 
-// Activity header configuration - Updated for Moodle 5.x.
+// Activity header configuration
 $THEME->activityheaderconfig = [
     'notitle' => false,
     'nocompletion' => false,
@@ -90,66 +196,31 @@ $THEME->activityheaderconfig = [
     'notitlelink' => false
 ];
 
-// Block RTL manipulations.
+// Block RTL manipulations
 $THEME->blockrtlmanipulations = [
     'side-pre' => 'side-post',
     'side-post' => 'side-pre'
 ];
 
-// AMD modules to be loaded - New for optimized loading.
-$THEME->requiredmodules = [
-    'theme_ufpel/theme'
-];
-
-// JavaScript initialization - New for Moodle 5.x.
-$THEME->javascripts = [];
-$THEME->javascripts_footer = [];
-
-// UFPel specific settings.
+// CSS optimisation support
 $THEME->supportscssoptimisation = true;
-$THEME->yuicssmodules = [];
+
+// Enable course AJAX
 $THEME->enablecourseajax = true;
 
-// Dock is deprecated and not used.
+// Dock is not used in modern themes
 $THEME->enable_dock = false;
 
-// Preset files available.
+// Preset files
 $THEME->presetsfiles = [
     'default.scss',
-    'dark.scss'
+    'plain.scss',
 ];
 
-// Clonable region format.
+// Clonable region format
 $THEME->clonable_region_format = 'aside';
 
-// Remove any duplicate settings.
-$THEME->removedprimarynavitems = [];
-
-// Use secure login layout if required.
-$THEME->securelayout = 'secure';
-
-// New settings for Moodle 5.x
-
-// Support for content bank.
-$THEME->usescontentbank = true;
-
-// Support for course index.
-$THEME->usescourseindex = true;
-
-// Support for activity chooser.
-$THEME->useactivitychooser = true;
-
-// Support for user tours.
-$THEME->usesusertours = true;
-
-// Support for notifications.
-$THEME->usesnotifications = true;
-
-// Performance settings - New for Moodle 5.x.
-$THEME->hidefromselector = false;
-$THEME->rendererthemeparent = 'boost';
-
-// Content areas that support file serving.
+// Content areas for file serving
 $THEME->contentareas = [
     'logo' => [
         'maxfiles' => 1,
@@ -163,37 +234,22 @@ $THEME->contentareas = [
         'maxfiles' => 1,
         'accepted_types' => '.ico,.png,.svg'
     ],
-    'footerlogo' => [
-        'maxfiles' => 1,
-        'accepted_types' => 'web_image'
-    ]
 ];
 
-// Theme capabilities.
-$THEME->capabilities = [];
+// Hide from theme selector (set to false for production)
+$THEME->hidefromselector = false;
 
-// Theme update callback - New for Moodle 5.x.
-$THEME->postupdatecallback = 'theme_ufpel_post_update';
+// Support for content bank
+$THEME->usescontentbank = true;
 
-// ARIA labels - New for accessibility in Moodle 5.x.
-$THEME->arialabels = [
-    'region-side-pre' => 'theme_ufpel',
-    'region-side-post' => 'theme_ufpel'
-];
+// Support for activity chooser
+$THEME->useactivitychooser = true;
 
-// Define regions for specific layouts if needed.
-$THEME->defaultregions = ['side-pre'];
+// Support for user tours
+$THEME->usesusertours = true;
 
-// Support for CSS grid layout - New in Moodle 5.x.
+// Support for notifications
+$THEME->usesnotifications = true;
+
+// Support for CSS Grid
 $THEME->usescssGrid = true;
-
-// Support for CSS custom properties - New in Moodle 5.x.
-$THEME->usescustomproperties = true;
-
-// Theme metadata - New for Moodle 5.x.
-$THEME->metadata = [
-    'author' => 'Universidade Federal de Pelotas',
-    'license' => 'GPL v3',
-    'version' => '1.1.0',
-    'moodle_version' => '5.0+'
-];

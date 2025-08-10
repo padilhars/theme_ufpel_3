@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Login layout for theme_ufpel - Fixed version
+ * Login layout for theme_ufpel - Fixed version for Moodle 5.x
  *
  * @package    theme_ufpel
  * @copyright  2025 Universidade Federal de Pelotas
@@ -37,75 +37,40 @@ $templatecontext = [
     'bodyattributes' => $OUTPUT->body_attributes(['class' => 'pagelayout-login']),
 ];
 
-// FIXED: Handle logo URL correctly - get_logo_url() returns moodle_url object or null
+// Handle logo URL
 if (method_exists($renderer, 'get_logo_url')) {
     $logourl = $renderer->get_logo_url();
     if ($logourl) {
-        // get_logo_url returns a moodle_url object, so we use ->out(false) to get the string
         $templatecontext['logourl'] = $logourl->out(false);
+    }
+} else {
+    // Fallback for older versions or custom logo settings
+    $logo = $PAGE->theme->setting_file_url('logo', 'logo');
+    if ($logo) {
+        $templatecontext['logourl'] = $logo;
     }
 }
 
-// FIXED: Handle background image URL correctly
+// Handle background image
 $loginbgimg = $PAGE->theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
 if (!empty($loginbgimg)) {
-    // Process the background image URL
-    if ($loginbgimg instanceof moodle_url) {
-        // It's already a moodle_url object
-        $templatecontext['loginbackgroundimage'] = $loginbgimg->out(false);
-    } else {
-        // It's a string, need to process it
-        $bgimgstr = (string)$loginbgimg;
-        
-        // Parse the URL to check if it's absolute
-        $parsed = parse_url($bgimgstr);
-        
-        if (!empty($parsed['scheme'])) {
-            // It's an absolute URL, extract the path
-            global $CFG;
-            $wwwroot_parsed = parse_url($CFG->wwwroot);
-            $wwwroot_path = $wwwroot_parsed['path'] ?? '';
-            
-            $path = $parsed['path'] ?? '';
-            if (!empty($parsed['query'])) {
-                $path .= '?' . $parsed['query'];
-            }
-            
-            // If the path starts with the wwwroot path, make it relative
-            if (!empty($wwwroot_path) && strpos($path, $wwwroot_path) === 0) {
-                $relative_path = substr($path, strlen($wwwroot_path));
-                $templatecontext['loginbackgroundimage'] = (new moodle_url($relative_path))->out(false);
-            } else {
-                $templatecontext['loginbackgroundimage'] = (new moodle_url($path))->out(false);
-            }
-        } else {
-            // It's a relative URL
-            $templatecontext['loginbackgroundimage'] = (new moodle_url($bgimgstr))->out(false);
-        }
-    }
+    $templatecontext['loginbackgroundimage'] = $loginbgimg;
     $templatecontext['hasloginbackgroundimage'] = true;
-} else {
-    $templatecontext['hasloginbackgroundimage'] = false;
 }
 
 // Add URLs for login links
 $templatecontext['homeurl'] = (new moodle_url('/'))->out(false);
 $templatecontext['forgotpasswordurl'] = (new moodle_url('/login/forgot_password.php'))->out(false);
 
-// Check if signup is enabled - with error handling
+// Check if signup is enabled
 $cansignup = false;
-try {
-    $authplugins = get_enabled_auth_plugins();
-    foreach ($authplugins as $authplugin) {
-        $authpluginobj = get_auth_plugin($authplugin);
-        if ($authpluginobj && method_exists($authpluginobj, 'can_signup') && $authpluginobj->can_signup()) {
-            $cansignup = true;
-            break;
-        }
+$authplugins = get_enabled_auth_plugins();
+foreach ($authplugins as $authplugin) {
+    $authpluginobj = get_auth_plugin($authplugin);
+    if ($authpluginobj && method_exists($authpluginobj, 'can_signup') && $authpluginobj->can_signup()) {
+        $cansignup = true;
+        break;
     }
-} catch (Exception $e) {
-    // If there's an error checking auth plugins, just don't show signup
-    $cansignup = false;
 }
 
 if ($cansignup) {
@@ -115,5 +80,88 @@ if ($cansignup) {
 
 $templatecontext['haslogininfo'] = true;
 
-// Render the template
-echo $OUTPUT->render_from_template('theme_ufpel/login_simple', $templatecontext);
+// IMPORTANTE: Esta é a correção principal!
+// Devemos chamar $OUTPUT->doctype() ANTES de renderizar qualquer conteúdo
+echo $OUTPUT->doctype();
+?>
+<html <?php echo $OUTPUT->htmlattributes(); ?>>
+<head>
+    <title><?php echo get_string('login'); ?> - <?php echo format_string($SITE->fullname); ?></title>
+    <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon(); ?>" />
+    <?php echo $OUTPUT->standard_head_html(); ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body <?php echo $templatecontext['bodyattributes']; ?>>
+<?php echo $OUTPUT->standard_top_of_body_html(); ?>
+
+<div id="page-wrapper">
+    <div id="page" class="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card login-container">
+                    <div class="card-body p-4">
+                        <?php if (!empty($templatecontext['logourl'])): ?>
+                        <div class="text-center mb-4">
+                            <img src="<?php echo $templatecontext['logourl']; ?>" 
+                                 class="img-fluid" 
+                                 alt="<?php echo $templatecontext['sitename']; ?>" 
+                                 style="max-height: 60px;">
+                        </div>
+                        <?php else: ?>
+                        <h2 class="text-center mb-4"><?php echo $templatecontext['sitename']; ?></h2>
+                        <?php endif; ?>
+                        
+                        <div id="region-main">
+                            <?php
+                            // Renderizar o conteúdo principal do login
+                            echo $OUTPUT->course_content_header();
+                            echo $OUTPUT->main_content();
+                            echo $OUTPUT->course_content_footer();
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <?php if ($templatecontext['haslogininfo']): ?>
+                <div class="mt-3 text-center small">
+                    <a href="<?php echo $templatecontext['homeurl']; ?>" class="text-muted">
+                        <?php echo get_string('home'); ?>
+                    </a>
+                    <?php if (!empty($templatecontext['cansignup'])): ?>
+                    | <a href="<?php echo $templatecontext['signupurl']; ?>" class="text-muted">
+                        <?php echo get_string('startsignup'); ?>
+                    </a>
+                    <?php endif; ?>
+                    | <a href="<?php echo $templatecontext['forgotpasswordurl']; ?>" class="text-muted">
+                        <?php echo get_string('forgotten'); ?>
+                    </a>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <?php echo $OUTPUT->standard_footer_html(); ?>
+</div>
+
+<?php
+// Background image style
+if (!empty($templatecontext['hasloginbackgroundimage'])): ?>
+<style>
+    body.pagelayout-login {
+        background-image: url('<?php echo $templatecontext['loginbackgroundimage']; ?>');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .login-container {
+        background: rgba(255, 255, 255, 0.95);
+    }
+</style>
+<?php endif; ?>
+
+<?php echo $OUTPUT->standard_end_of_body_html(); ?>
+</body>
+</html>
